@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FunctionTemplate>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Batch</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Batch job to process raw material migration
+/// </summary>
+class $ClassPrefix$Batch extends RunBaseBatch implements BatchRetryable
+{
+    // Packed variables
+    TransDate       gTransDate;
+    CustAccount     gCustAccount;
+
+    // Dialog fields
+    DialogField     gDlgTransDate;
+    DialogField     gDlgCustAccount;
+
+    #define.CurrentVersion(1)
+    #localmacro.CurrentList
+        gTransDate,
+        gCustAccount
+    #endmacro
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>canGoBatch</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Indicates whether the class can run in batch
+    /// </summary>
+    /// <returns>true if the class can run in batch; otherwise, false.</returns>
+    public boolean canGoBatch()
+    {
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>canGoBatchJournal</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Indicates whether the class is shown in the list of <c>Journal</c> types.
+    /// </summary>
+    /// <returns>true if the class is shown in the list of <c>Journal</c> types; otherwise, false.</returns>
+    public boolean canGoBatchJournal()
+    {
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>dialog</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Returns a class that contains the methods that are described by the <c>RunBaseDialogable</c> interface.
+    /// </summary>
+    /// <returns>A class that contains the methods that are described by the <c>RunBaseDialogable</c> interface.</returns>
+    public Object dialog()
+    {
+        DialogRunbase       dialog = super();
+    
+        gDlgTransDate = dialog.addFieldValue(extendedTypeStr(TransDate), gTransDate);
+    
+        dialog.addTabPage(\"@SYS76580\");
+        gDlgCustAccount = dialog.addFieldValue(extendedTypeStr(CustAccount), gCustAccount);
+    
+        return dialog;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>getFromDialog</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get values from dialog
+    /// </summary>
+    /// <returns>true if valid</returns>
+    public boolean getFromDialog()
+    {
+        gTransDate      = gDlgTransDate.value();
+        gCustAccount    = gDlgCustAccount.value();
+    
+        return super();
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>pack</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Pack variables
+    /// </summary>
+    /// <returns>Package of variables</returns>
+    public container pack()
+    {
+        return [#CurrentVersion, #CurrentList];
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>run</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Contains the code that does the actual job of the class.
+    /// </summary>
+    public void run()
+    {
+        #OCCRetryCount
+        if (!this.validate())
+        {
+            throw error("");
+        }
+    
+        try
+        {
+            ttsbegin;
+    
+            // TODO: Put your logic here
+    
+            ttscommit;
+        }
+        catch (Exception::Deadlock)
+        {
+            retry;
+        }
+        catch (Exception::UpdateConflict)
+        {
+            if (appl.ttsLevel() == 0)
+            {
+                if (xSession::currentRetryCount() >= #RetryNum)
+                {
+                    throw Exception::UpdateConflictNotRecovered;
+                }
+                else
+                {
+                    retry;
+                }
+            }
+            else
+            {
+                throw Exception::UpdateConflict;
+            }
+        }
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>runsImpersonated</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Runs impersonated.
+    /// </summary>
+    /// <returns>true if run impersonated</returns>
+    public boolean runsImpersonated()
+    {
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>unpack</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get variables from package
+    /// </summary>
+    /// <param name="_packedClass">Class package</param>
+    /// <returns>true if valid</returns>
+    public boolean unpack(container _packedClass)
+    {
+        Version version = RunBase::getVersion(_packedClass);
+    
+        switch (version)
+        {
+            case #CurrentVersion:
+                [version, #CurrentList] = _packedClass;
+                break;
+    
+            default:
+                return false;
+        }
+    
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>validate</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Validate variables
+    /// </summary>
+    /// <param name=""_calledFrom"">Called from object</param>
+    /// <returns>true if valid</returns>
+    public boolean validate(Object _calledFrom = null)
+    {
+        // TODO: Add your validation logic here
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>construct</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Construct the class
+    /// </summary>
+    /// <returns>This class</returns>
+    static $ClassPrefix$Batch construct()
+    {
+        return new $ClassPrefix$Batch();
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>caption</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Here goes a description of the class
+    /// </summary>
+    /// <returns>Description of the class</returns>
+    
+    public ClassDescription caption()
+    {
+        // TODO: Change to your description
+		return "Your Description ";
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>description</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Here goes a description of the class
+    /// </summary>
+    /// <returns>Description of the class</returns>
+    
+    public static ClassDescription description()
+    {
+        // TODO: Change to your description
+		return "Your Description ";
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>main</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Entry point
+    /// </summary>
+    static void main(Args _args)
+    {
+        $ClassPrefix$Batch      batch;
+    
+        batch = $ClassPrefix$Batch::construct();
+    
+        if (batch.prompt())
+        {
+            batch.runOperation();
+        }
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>canRunInNewSession</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Can run in new session
+    /// </summary>
+    /// <returns>true if this can run in new session</returns>
+    protected boolean canRunInNewSession()
+    {
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>isRetryable</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Specifies if the batch task is retryable for transient exceptions or not.
+    /// </summary>
+    /// <returns>If true is returned, the batch task is retryable, otherwise it is not.</returns>
+    [Hookable(false)]
+    public final boolean isRetryable()
+    {
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+</FunctionTemplate>

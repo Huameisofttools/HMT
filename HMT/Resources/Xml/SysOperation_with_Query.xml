@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FunctionTemplate>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Contract</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// This class used to prepare parameter for service.
+/// </summary>
+[
+    DataContractAttribute,
+    //Register a UIBuilder, it is optional, if you have some custom function for the dialog fields you could register a UIBuilder
+    SysOperationContractProcessingAttribute(classStr($ClassPrefix$UIBuilder))
+]
+class $ClassPrefix$Contract implements SysOperationValidatable
+{
+    InventLocationId    gInventLocationId;
+    InventSiteId        gInventSiteId;
+    str                 gEncodedQuery;
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>parmInventLocationId</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Set and parm field
+	/// </summary>
+	[
+		DataMemberAttribute('InventLocationId'),
+		SysOperationDisplayOrderAttribute('2')
+	]
+	public InventLocationId parmInventLocationId(InventLocationId _InventLocationId = gInventLocationId)
+	{
+		gInventLocationId = _InventLocationId;
+
+		return gInventLocationId;
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>parmInventSiteId</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Set and parm field
+	/// </summary>
+	[
+		DataMemberAttribute('InventSiteId'),
+		SysOperationDisplayOrderAttribute('1')
+	]
+	public inventSiteId parmInventSiteId(InventSiteId _InventSiteId = gInventSiteId)
+	{
+		gInventSiteId = _InventSiteId;
+
+		return gInventSiteId;
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>parmQuery</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Set and parm query
+	/// </summary>
+	/// <param name="encodedQuery">
+	/// Set encodedQuery from dialog
+	/// </param>
+	/// <returns>
+	/// Get encodedQuery
+	/// </returns>
+	[
+		DataMemberAttribute,
+		AifQueryTypeAttribute('_encodedQuery', queryStr($ClassPrefix$Query)),
+		SysOperationLabelAttribute('Sales line')
+	]
+	public str parmQuery(str _encodedQuery = gEncodedQuery)
+	{
+		gEncodedQuery = _encodedQuery;
+
+		return gEncodedQuery;
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>validate</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Validate dialog field when dialog closed.
+	/// </summary>
+	public boolean validate()
+	{
+		if (!gInventLocationId)
+		{
+			error('Warehouse must be fill in.');
+			return false;
+		}
+		return true;
+	}
+
+]]>
+                    </Source>
+                </Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Controller</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Enter point for menuitem or other callers.
+/// </summary>
+[SysOperationJournaledParametersAttribute(true)]
+class $ClassPrefix$Controller extends SysOperationServiceController implements BatchRetryable
+{
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>new</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// New a class object
+	/// </summary>
+	/// <param name="_className">Service class name</param>
+	/// <param name="_methodName">Service execution method name</param>
+	/// <param name="_executionMode">Execution mode</param>
+	public void new(
+		IdentifierName              _className      = classStr($ClassPrefix$Service),
+		IdentifierName              _methodName     = methodStr($ClassPrefix$Service, execute),
+		SysOperationExecutionMode   _executionMode  = SysOperationExecutionMode::Synchronous)
+	{
+		super(_className, _methodName, _executionMode);
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>main</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Provide an enter point for calss $ClassPrefix$Controller
+	/// </summary>
+	public static void main(Args _args)
+	{
+		$ClassPrefix$Controller    controller;
+		IdentifierName                  className, methodName;
+		SysOperationExecutionMode       mode;
+		Common                          record;
+		SalesTable                      salesTable;
+		$ClassPrefix$Contract      contract;
+
+		//If don't have caller records remove this codes
+		if (_args.record())
+		{
+			record = _args.record();
+
+			switch (record.TableId)
+			{
+				case tableNum(SalesTable):
+					salesTable = record;
+					//TODO: Add process logic
+					break;
+				default:
+					//TODO: Add process logic
+					break;
+			}
+		}
+
+		[className, methodName, mode]   = SysOperationServiceController::parseServiceInfo(_args);
+		controller                      = new $ClassPrefix$Controller(className, methodName, mode);
+		contract                        = controller.getDataContractObject();
+
+		if (salesTable)
+		{
+			contract.parmInventSiteId(salesTable.InventSiteId);
+			contract.parmInventLocationId(salesTable.InventLocationId);
+		}
+		//Whether do we need to show dialog
+		controller.parmShowDialog(true);
+		controller.parmArgs(_args);
+		controller.startOperation();
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>isRetryable</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Specifies if the batch task is retryable for transient exceptions or not.
+	/// </summary>
+	/// <returns>If true is returned, the batch task is retryable, otherwise it is not.</returns>
+	[Hookable(false)]
+	public final boolean isRetryable() 
+	{
+		return true;
+	}
+
+]]>
+                    </Source>
+                </Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Service</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Process business logic
+/// </summary>
+class $ClassPrefix$Service
+{
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>execute</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Business process logic
+	/// </summary>
+	/// <param name="_contract">Contract class used to parm dialog parameter.</param>
+	[SysEntryPointAttribute]
+	public void execute($ClassPrefix$Contract _contract)
+	{
+		QueryRun queryRun;
+		Query query;
+		SalesLine salesLine;
+
+		query = new query(SysOperationHelper::base64Decode(_contract.parmQuery()));
+		queryRun = new queryRun(query);
+
+		while (queryRun.next())
+		{
+			try
+			{
+				salesLine = queryRun.get(tableNum(SalesLine));
+				if (salesLine.inventDim().InventSiteId == _contract.parmInventSiteId())
+				{
+					//info(salesLine.SalesId);
+				}
+			}
+			catch
+			{
+				//if an error was thrown, error status should be set to true
+				throw error(");
+			}
+		}
+
+	}
+
+]]>
+                    </Source>
+                </Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$UIBuilder</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Used to add custom dialog.
+/// </summary>
+class $ClassPrefix$UIBuilder extends SysOperationAutomaticUIBuilder
+{
+    $ClassPrefix$Contract  gContract;
+    DialogField                 gInventLocationId;
+    DialogField                 gInventSiteId;
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>build</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Initialize dialog and register form control.
+	/// </summary>
+	public void build()
+	{
+		super();
+
+		gContract           = this.dataContractObject() as $ClassPrefix$Contract;
+		//Get fields
+		gInventLocationId   = this.bindInfo().getDialogField(gContract, methodStr($ClassPrefix$Contract, parmInventLocationId));
+		gInventSiteId       = this.bindInfo().getDialogField(gContract, methodStr($ClassPrefix$Contract, parmInventSiteId));
+
+		// Register and overwrite the lookup method
+		gInventLocationId.registerOverrideMethod(methodStr(FormStringControl, lookup), methodStr($ClassPrefix$UIBuilder, warehouseLookup), this);
+		gInventLocationId.registerOverrideMethod(methodStr(FormStringControl, modified), methodStr($ClassPrefix$UIBuilder, warehouseModified), this);
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>warehouseLookup</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Use this method instead of form field control lookup.
+	/// </summary>
+	public void warehouseLookup(FormStringControl _control)
+	{
+		SysTableLookup          sysTableLookup      = SysTableLookup::newParameters(tableNum(InventLocation), _control);
+		Query                   query               = new Query();
+		QueryBuildDataSource    locationDS          = query.addDataSource(tableNum(InventLocation));
+
+		locationDS.addRange(fieldNum(InventLocation, InventSiteId)).value(gInventSiteId.value());
+
+		sysTableLookup.addSelectionField(fieldNum(InventLocation, InventLocationId));
+		sysTableLookup.addLookupfield(fieldNum(InventLocation, InventLocationId));
+		sysTableLookup.addLookupfield(fieldNum(InventLocation, InventSiteId));
+		sysTableLookup.addLookupfield(fieldNum(InventLocation, name));
+		sysTableLookup.parmQuery(query);
+		sysTableLookup.performFormLookup();
+	}
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>warehouseModified</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Use this method instead of form field control modified.
+	/// </summary>
+	public boolean warehouseModified(FormStringControl _control)
+	{
+		InventLocation  inventLocation;
+
+		if (gInventLocationId.value())
+		{
+			inventLocation = InventLocation::find(gInventLocationId.value());
+
+			if (!gInventSiteId.value())
+			{
+				gInventSiteId.value(inventLocation.InventSiteId);
+			}
+		}
+		return true;
+	}
+
+]]>
+                    </Source>
+                </Method>
+			</Methods>
+        </SourceCode>
+    </AxClass>
+</FunctionTemplate>

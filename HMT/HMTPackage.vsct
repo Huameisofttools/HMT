@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidHMTPackage">	  
+    <Groups>		  	
+	  <Group guid="guidHMTPackageGroupSet" id="HMTGroup" priority="0x0104">		  
+		<Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_MAINMENU" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" priority="0x0600">
+		<Parent guid="guidHMTPackageMenuSet" id="HMTItemMenu" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTProjectGroup" priority="0x0600">
+		<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTItemGroup" priority="0x0600">
+		<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTItemGroup" priority="0x0600">
+		<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTEditorGroup" priority="0x0600">
+		<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTSecGroup" priority="0x0600">
+		<Parent guid="guidHMTPackageMenuSet" id="HMTMenu" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTProjectNodeGroup" priority="0x0600">
+		<Parent guid="guidHMTPackageMenuSet" id="HMTProjectMenu" />
+	  </Group>
+	  <Group guid="guidHMTPackageGroupSet" id="HMTSecEditorGroup" priority="0x0600">
+		<Parent guid="guidHMTPackageMenuSet" id="HMTEditorMenu" />
+	  </Group>
+    </Groups>
+	  
+	<Menus>		
+	  <Menu guid="guidHMTPackageMenuSet" id="HMTMenu" priority="0x0102">
+	    <Parent guid="guidHMTPackageGroupSet" id="HMTGroup" />		  
+		<Strings>
+		<ButtonText>HMT</ButtonText>
+		</Strings>
+	  </Menu>
+	  <Menu guid="guidHMTPackageMenuSet" id="HMTProjectMenu" priority="0x0102">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTProjectGroup" />
+		<Strings>
+		<ButtonText>HMT</ButtonText>
+		</Strings>
+	  </Menu>
+	  <Menu guid="guidHMTPackageMenuSet" id="HMTItemMenu" priority="0x0102">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTItemGroup" />
+		<Strings>
+		  <ButtonText>HMT</ButtonText>
+		</Strings>
+	  </Menu>
+	  <Menu guid="guidHMTPackageMenuSet" id="HMTEditorMenu" priority="0x0102">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTEditorGroup" />
+		<Strings>
+		  <ButtonText>HMT</ButtonText>
+		</Strings>
+	  </Menu>
+	</Menus>
+	  
+    <Buttons>
+      <Button guid="guidHMTPackageCmdSet" id="HMTLabelGenerateForAllId" priority="0x0100" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+        <Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Generate Label For All</ButtonText>
+        </Strings>
+      </Button>
+	  
+      <Button guid="guidHMTPackageCmdSet" id="HMTLabelGenerateForItem" priority="0x0100" type="Button">		  
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />		  
+        <Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Generate Label For Item</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidHMTPackageCmdSet" id="HMTLabelGenerateForProject" priority="0x0100" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTProjectNodeGroup" />
+        <Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Generate Label For Project</ButtonText>
+        </Strings>
+      </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTKernalSettingsCommand" priority="0x0100" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Extension Class Name Setup</ButtonText>
+        </Strings>
+      </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTBatchJobGenerateCommand" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<Strings>
+		  <ButtonText>Generate AX Elements By Templates (Test version)</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTFormGenerateCommand" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />		  
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Form For Table</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTHeaderCommentGenerateForItemCmd" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />		  
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Header Comment For Item</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTHeaderCommentGenerateForProjectCmd" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTProjectNodeGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<Strings>
+		  <ButtonText>Generate Header Comment For Project</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTPrivilegeAndDutyGenerateForItemCmd" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Privilege For Element</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTParmMethodGenerateCmd" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecEditorGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Parm Method</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTFindExistGeneratorCmd" priority="0x1207" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Find And Exist Method</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTExtendAxElementCmd" priority="0x1208" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTProjectNodeGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Generate Extension Class</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="TableFieldsBuilderCmd" priority="0x1209" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Fields Builder</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="TableBuilderCmd" priority="0x1210" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Table Builder</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTUserIssueFeedbackCommand" priority="0x0131" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+        <Icon guid="guidBugIcon" id="HMBugReport" />
+        <Strings>
+          <ButtonText>Report a problem</ButtonText>
+        </Strings>
+      </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTUserSuggestCommand" priority="0x0133" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidSuggestIcon" id="HMSuggestReport" />
+		<Strings>
+		  <ButtonText>Suggest a feature</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTUserGuideCommand" priority="0x0135" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidGuideIcon" id="HMGuideReport" />
+		<Strings>
+		  <ButtonText>User guide</ButtonText>
+		</Strings>
+	  </Button>
+    </Buttons> 
+	  
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Icon\HMLOGO.png" usedList="HMLOGO" />
+	  <Bitmap guid="guidBugIcon" href="Resources\Icon\bug-report.png" usedList="HMBugReport" />
+	  <Bitmap guid="guidSuggestIcon" href="Resources\Icon\release.png" usedList="HMSuggestReport" />
+	  <Bitmap guid="guidGuideIcon" href="Resources\Icon\file-fill.png" usedList="HMGuideReport" />
+    </Bitmaps>	  
+  </Commands>
+
+  <Symbols>	 
+    <GuidSymbol name="guidHMTPackage" value="{4ab38674-8342-44af-9ef8-fdaf145c8972}" />	  
+    <GuidSymbol name="guidHMTPackageCmdSet" value="{194ef7a6-070b-47e5-b084-193c13aa350a}">
+      <IDSymbol name="HMTLabelGenerateForAllId" value="0x0100" />      
+	  <IDSymbol name="HMTKernalSettingsCommand" value="0x1202" />
+	  <IDSymbol name="HMTBatchJobGenerateCommand" value="0x1206" />
+	  <IDSymbol name="HMTFormGenerateCommand" value="0x0118" />
+	  <IDSymbol name="HMTHeaderCommentGenerateForItemCmd" value="0x0120" />
+	  <IDSymbol name="HMTHeaderCommentGenerateForAllCmd" value="0x0122" />
+	  <IDSymbol name="HMTHeaderCommentGenerateForProjectCmd" value="0x0124" />
+	  <IDSymbol name="HMTLabelGenerateForItem" value="0x0130" />
+	  <IDSymbol name="HMTLabelGenerateForProject" value="0x0132" />
+	  <IDSymbol name="HMTPrivilegeAndDutyGenerateForItemCmd" value="0x0134" />
+	  <IDSymbol name="HMTParmMethodGenerateCmd" value="0x0142" />
+	  <IDSymbol name="HMTFindExistGeneratorCmd" value="0x1207" />
+	  <IDSymbol name="HMTExtendAxElementCmd" value="0x1208" />
+	  <IDSymbol name="TableFieldsBuilderCmd" value="0x1209" />
+	  <IDSymbol name="TableBuilderCmd" value="0x1210" />
+	  <IDSymbol name="HMTUserIssueFeedbackCommand" value="0x0131" />
+	  <IDSymbol name="HMTUserSuggestCommand" value="0x0133" />
+	  <IDSymbol name="HMTUserGuideCommand" value="0x0135" />
+    </GuidSymbol>
+
+	<GuidSymbol name="guidHMTPackageMenuSet" value="{1041a140-1cb6-44a5-9704-25bd0f8508ca}">
+	  <IDSymbol name="HMTMenu" value="0x0102" />
+	  <IDSymbol name="HMTProjectMenu" value="0x0106" />
+	  <IDSymbol name="HMTItemMenu" value="0x0110" />
+	  <IDSymbol name="HMTEditorMenu" value="0x0136" />
+	</GuidSymbol>
+
+	<GuidSymbol name="guidHMTPackageGroupSet" value="{f4a087a7-38ca-4274-a721-dabd07d80721}">
+	  <IDSymbol name="HMTGroup" value="0x0104" />
+	  <IDSymbol name="HMTProjectGroup" value="0x0108" />
+	  <IDSymbol name="HMTItemGroup" value="0x0112" />
+	  <IDSymbol name="HMTSecItemGroup" value="0x0116" />
+	  <IDSymbol name="HMTSecGroup" value="0x0126" />
+	  <IDSymbol name="HMTProjectNodeGroup" value="0x0128" />
+	  <IDSymbol name="HMTEditorGroup" value="0x0138" />
+	  <IDSymbol name="HMTSecEditorGroup" value="0x0140" />
+	</GuidSymbol>
+
+	<GuidSymbol name="guidImages" value="{6dbed8c9-a458-4c26-9760-68b6cb0f4e0d}">
+	  <IDSymbol name="HMLOGO" value="1" />
+	</GuidSymbol>
+	<GuidSymbol name="guidBugIcon" value="{2DF09837-9045-4D21-A58B-B831546C6530}">
+	  <IDSymbol name="HMBugReport" value="1" />
+	</GuidSymbol>
+	<GuidSymbol name="guidSuggestIcon" value="{286242F8-C29E-4CA5-9CCF-F0296202F669}">
+	  <IDSymbol name="HMSuggestReport" value="1" />
+	</GuidSymbol>
+	<GuidSymbol name="guidGuideIcon" value="{00984B0A-A21F-42FC-A5B7-4E452419FA66}">
+	  <IDSymbol name="HMGuideReport" value="1" />
+	</GuidSymbol>
+  </Symbols>
+</CommandTable>

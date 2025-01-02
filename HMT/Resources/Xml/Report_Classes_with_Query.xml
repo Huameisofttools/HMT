@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FunctionTemplate>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Contract</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Contract class of the report
+/// </summary>
+[
+    DataContractAttribute,
+    //Register a UIBuilder, it is optional, if you have some custom function for the dialog fields you could register a UIBuilder
+    SysOperationContractProcessingAttribute(classStr($ClassPrefix$UIBuilder)),
+    SysOperationGroupAttribute('Order', "@SYS106702", '1')
+]
+class $ClassPrefix$Contract implements SysOperationValidatable, SysOperationInitializable
+{
+    NoYes gChoose;
+    TransDate gFromDate;
+    TransDate gToDate;
+    PurchId gPurchId;
+    List gIdentifierType;
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>getRangeValueFromList</Name>
+                    <Source>
+                        <![CDATA[
+    /// List elements to str value
+    /// </returns>
+    public Range getRangeValueFromList(List _multSelectList)
+    {
+        Range           rangeValue;
+        ListEnumerator  listEnumerator;
+
+        if (_multSelectList && !_multSelectList.empty())
+        {
+            listEnumerator = _multSelectList.getEnumerator();
+
+            while (listEnumerator.moveNext())
+            {
+                if (rangeValue)
+                {
+                    rangeValue += ", " + listEnumerator.current();
+                }
+                else
+                {
+                    rangeValue += listEnumerator.current();
+                }
+            }
+        }
+
+        return rangeValue;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>initialize</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Initializes data contract values.
+    /// </summary>
+    public void initialize()
+    {
+        //TODO: Initialize method
+    }
+
+]]>
+                    </Source>
+                </Method>
+				<Method>
+					<Name>parmChoose</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get or set the choose
+    /// </summary>
+    /// <param name="_choose">Set the paramether choose</param>
+    /// <returns>Return the choose</returns>
+    [
+        DataMemberAttribute('Choose'),
+        SysOperationLabelAttribute(literalstr('Choose')),
+        SysOperationGroupMemberAttribute('Order'),
+        SysOperationDisplayOrderAttribute('3')
+    ]
+    public NoYes parmChoose(NoYes _choose = gChoose)
+    {
+        gChoose = _choose;
+
+        return gChoose;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>parmFromDate</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get or set the _fromDate
+    /// </summary>
+    /// <param name="_fromDate">Set the paramether _fromDate</param>
+    /// <returns>Return the _fromDate</returns>
+    [
+        DataMemberAttribute('FromDate'),
+        SysOperationLabelAttribute(literalstr('From date')),
+        SysOperationGroupMemberAttribute('Order'),
+        SysOperationDisplayOrderAttribute('1')
+    ]
+    public TransDate parmFromDate(TransDate _fromDate = gFromDate)
+    {
+        gFromDate = _fromDate;
+
+        return gFromDate;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>parmIdentifierType</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Gets or sets the gIdentifierType parameter.
+    /// </summary>
+    /// <param name="_identifierType">The value to set.</param>
+    /// <returns>The value of the gIdentifierType parameter.</returns>
+    [
+        DataMemberAttribute('IdentifierType'),//TODO:Change the name, labels
+        SysOperationLabelAttribute(literalStr("@SYS107395")),//TODO:
+        SysOperationHelpTextAttribute(literalStr("@SYS107403")),//TODO:
+        AifCollectionTypeAttribute('return', Types::String),
+        SysOperationGroupMemberAttribute('Order'),
+        SysOperationDisplayOrderAttribute('5')
+    ]
+    public List parmIdentifierType(List _identifierType = gIdentifierType)
+    {
+        gIdentifierType = _identifierType;
+        return gIdentifierType;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>parmPurchId</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get or set the _purchId
+    /// </summary>
+    /// <param name="_purchId">Set the paramether _purchId</param>
+    /// <returns>Return the _purchId</returns>
+    [
+        DataMemberAttribute('PurchId'),
+        SysOperationLabelAttribute(literalstr('PurchId')),
+        SysOperationGroupMemberAttribute('Order'),
+        SysOperationDisplayOrderAttribute('4')
+    ]
+    public PurchId parmPurchId(PurchId _purchId = gPurchId)
+    {
+        gPurchId = _purchId;
+
+        return gPurchId;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>parmToDate</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get or set the _toDate
+    /// </summary>
+    /// <param name="_toDate">Set the paramether _toDate</param>
+    /// <returns>Return the _toDate</returns>
+    [
+        DataMemberAttribute('ToDate'),
+        SysOperationLabelAttribute(literalstr('To date')),
+        SysOperationGroupMemberAttribute('Order'),
+        SysOperationDisplayOrderAttribute('2')
+    ]
+    public TransDate parmToDate(TransDate _toDate = gToDate)
+    {
+        gToDate = _toDate;
+
+        return gToDate;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>validate</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Validate parameters
+    /// </summary>
+    /// <returns>
+    /// Default return true
+    /// </returns>
+    public boolean validate()
+    {
+        return true;
+    }
+
+]]>
+					</Source>
+				</Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$Controller</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// The controller class of report
+/// </summary>
+class $ClassPrefix$Controller extends SrsReportRunController
+{
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>prePromptModifyContract</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    ///  Over ride the prePromptModifyContract
+    /// </summary>
+    protected void prePromptModifyContract()
+    {
+        $ClassPrefix$Contract    contract;
+        Query                   query;
+
+        contract    = this.parmReportContract().parmRdpContract() as $ClassPrefix$Contract;
+        query       = this.parmReportContract().parmQueryContracts().lookup(this.getFirstQueryContractKey());
+        if (query.dataSourceTable(tableNum(SalesTable)).findRange(fieldNum(SalesTable, SalesId)))
+        {
+            query.dataSourceTable(tableNum(SalesTable)).findRange(fieldNum(SalesTable, SalesId)).value(""Test001"");
+        }
+        else
+        {
+            query.dataSourceTable(tableNum(SalesTable)).addRange(fieldNum(SalesTable, SalesId)).value(""Test001"");
+        }
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>templateForm</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Modify the template form
+    /// </summary>
+    /// <returns>Return the template form</returns>
+    protected FormName templateForm()
+    {
+        FormName ret;
+        
+        if (useReportViewerForm)
+        {
+            return formStr($ClassPrefix$TemplateForm);
+        }
+        else
+        {
+            return formStr($ClassPrefix$TemplateForm);
+        }
+
+        ret = super();
+
+        return ret;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>main</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Entry point
+    /// </summary>
+    /// <param name="_args">The caller args</param>
+    public static void main(Args _args)
+    {
+        $ClassPrefix$Controller controller = new $ClassPrefix$Controller();
+
+        controller.parmReportName(ssrsReportStr($ClassPrefix$Report, Report));
+        controller.parmArgs(_args);
+        controller.startOperation();
+    }
+
+]]>
+                    </Source>
+                </Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$DP</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// The DP class of the report
+/// </summary>
+[
+    SRSReportQueryAttribute(queryStr($ClassPrefix$Query)),
+    SRSReportParameterAttribute(classStr($ClassPrefix$Contract))
+]
+public class $ClassPrefix$DP extends SrsReportDataProviderPreProcessTempDB
+{
+    $ClassPrefix$Tmp gReportTmp;
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>get$ClassPrefix$Tmp</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Get the temporary table
+    /// </summary>
+    /// <returns>Return the temporary table</returns>
+    [
+        SRSReportDataSetAttribute('$ClassPrefix$Tmp')
+    ]
+    public $ClassPrefix$Tmp get$ClassPrefix$Tmp()
+    {
+        select gReportTmp;
+        return gReportTmp;
+    }
+
+]]>
+                    </Source>
+                </Method>
+				<Method>
+					<Name>processReport</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Process the report
+    /// </summary>
+    [SysEntryPointAttribute]
+    public void processReport()
+    {
+        CompanyInfo     companyInfo = CompanyInfo::find();
+        Query           query       = this.parmQuery();
+        QueryRun        queryRun    = new QueryRun(query);
+        SalesTable      salesTable;
+        SalesLine       salesLine;
+        InventDim       inventDim;
+        BarcodeCode39   barcodeCode = BarcodeCode39::construct();
+
+        while (queryRun.next())
+        {
+            salesTable  = queryRun.get(tableNum(SalesTable));
+            salesLine   = queryRun.get(tableNum(SalesLine));
+            inventDim   = queryRun.get(tableNum(InventDim));
+
+            if (queryRun.changed(tableNum(SalesTable)))
+            {
+                gReportTmp.clear();
+
+                if (!gReportTmp.CompanyLogo)
+                {
+                    gReportTmp.CompanyLogo          = CompanyImage::findByRecord(companyInfo).Image;
+                }
+                gReportTmp.SalesId              = salesTable.SalesId;
+                gReportTmp.SalesType            = salesTable.SalesType;
+                gReportTmp.Address              = salesTable.deliveryAddress().Address;
+                gReportTmp.ReceiptDateConfirmed = salesTable.ReceiptDateConfirmed;
+                gReportTmp.SalesGroup           = salesTable.SalesGroup;
+            }
+
+            gReportTmp.ItemId       = salesLine.ItemId;
+
+            barcodeCode.string(true, gReportTmp.ItemId);
+            gReportTmp.ItemBarcode  = barcodeCode.barcodeStr();
+
+            gReportTmp.SalesQty     = salesLine.SalesQty;
+            gReportTmp.SalesPrice   = salesLine.SalesPrice;
+            gReportTmp.insert();
+        }
+    }
+
+]]>
+					</Source>
+				</Method>
+            </Methods>
+        </SourceCode>
+    </AxClass>
+    <AxClass
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <Name>$ClassPrefix$UIBuilder</Name>
+        <SourceCode>
+            <Declaration>
+                <![CDATA[
+/// <summary>
+$Comment$
+/// Builds the UI for report
+/// </summary>
+public class $ClassPrefix$UIBuilder extends SrsReportDataContractUIBuilder
+{
+    DialogField gPurchIdField;
+    DialogField gIdentifierTypeField;
+}
+]]>
+            </Declaration>
+            <Methods>
+                <Method>
+                    <Name>build</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Builds the <c>$ClassPrefix$Contract</c> report parameters.
+    /// </summary>
+    public void build()
+    {
+        $ClassPrefix$Contract    contract;
+        DialogField             chooseField;
+
+        super();
+
+        contract                = this.dataContractObject() as $ClassPrefix$Contract;
+        gPurchIdField           = this.bindInfo().getDialogField(contract, methodStr($ClassPrefix$Contract, parmPurchId));
+        chooseField             = this.bindInfo().getDialogField(contract, methodStr($ClassPrefix$Contract, parmChoose));
+        gIdentifierTypeField    = this.bindInfo().getDialogField(contract, methodStr($ClassPrefix$Contract, parmIdentifierType));
+
+        // controlling visibility
+        if (gPurchIdField)
+        {
+            gPurchIdField.registerOverrideMethod(methodStr(FormStringControl, lookup),
+                              methodStr($ClassPrefix$UIBuilder, purchIdLookup),
+                              this);
+        }
+
+        if (chooseField)
+        {
+            chooseField.registerOverrideMethod(methodStr(FormCheckBoxControl, Modified),
+                            methodStr($ClassPrefix$UIBuilder, chooseModified),
+                            this);
+        }
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>chooseModified</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Override the choose modified method
+    /// </summary>
+    /// <param name="_control">The choose checkbox control</param>
+    /// <returns>Return the modify result</returns>
+    public boolean chooseModified(FormCheckBoxControl _control)
+    {
+        if (_control.value() == NoYes::Yes)
+        {
+            gPurchIdField.visible(true);
+            this.controller().parmDialogCaption("Test001");
+        }
+        else
+        {
+            gPurchIdField.visible(false);
+            this.controller().parmDialogCaption("Test002");
+        }
+
+        return true;
+    }
+
+]]>
+                    </Source>
+                </Method>
+                <Method>
+                    <Name>identifierTypeLookup</Name>
+                    <Source>
+                        <![CDATA[
+    /// <summary>
+    $Comment$
+    /// Identifier types lookup method
+    /// </summary>
+    public void identifierTypeLookup()
+    {
+        Query       query               = new Query(queryStr(MultiLookupQuery));
+        QueryRun    queryRun            = new QueryRun(query);
+        RefTableId  multiSelectTableNum = tableNum(MultiLookupTable);
+        container   selectedFields      = [MultiLookupTable, fieldNum(MultiLookupTable, Name)];
+
+        SysLookupMultiSelectCtrl::constructWithQueryRun(this.dialog().dialogForm().formRun(), gIdentifierTypeField.control(), queryRun, false, selectedFields);
+    }
+
+]]>
+                    </Source>
+                </Method>
+				<Method>
+					<Name>identifierTypeModified</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Override the choose modified method
+    /// </summary>
+    /// <param name="_control">The choose checkbox control</param>
+    /// <returns>Return the modify result</returns>
+    public boolean identifierTypeModified(FormStringControl _control)
+    {
+        if (_control.valueStr())
+        {
+            gPurchIdField.visible(true);
+            gPurchIdField.allowEdit(true);
+        }
+
+        if (_control.modified())
+        {
+            info("True");
+        }
+        return true;
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>postRun</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Post run action
+    /// </summary>
+    public void postRun()
+    {
+        if (gIdentifierTypeField)
+        {
+            this.identifierTypeLookup();
+            gIdentifierTypeField.registerOverrideMethod(methodStr(FormStringControl, Modified),
+                        methodStr($ClassPrefix$UIBuilder, identifierTypeModified),
+                        this);
+        }
+    }
+
+]]>
+					</Source>
+				</Method>
+				<Method>
+					<Name>purchIdLookup</Name>
+					<Source>
+						<![CDATA[
+    /// <summary>
+    $Comment$
+    /// Override the purchId lookup method
+    /// </summary>
+    /// <param name="_control">The purchId control</param>
+    private void purchIdLookup(FormStringControl _control)
+    {
+        SysTableLookup sysTableLookup = SysTableLookup::newParameters(tableNum(PurchTable), _control);
+        Query query = new Query();
+        QueryBuildDataSource purchDS = query.addDataSource(tableNum(PurchTable));
+
+        purchDS.addRange(fieldNum(PurchTable, PurchaseType)).value(queryValue(PurchaseType::Purch));
+
+        sysTableLookup.addLookupfield(fieldNum(PurchTable, PurchId), true);
+        sysTableLookup.addLookupfield(fieldNum(PurchTable, PurchaseType));
+        sysTableLookup.parmQuery(query);
+        sysTableLookup.performFormLookup();
+    }
+
+]]>
+					</Source>
+				</Method>
+			</Methods>
+        </SourceCode>
+    </AxClass>
+</FunctionTemplate>
