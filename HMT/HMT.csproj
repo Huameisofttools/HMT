@@ -223,6 +223,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="README.txt" />
     <Content Include="Resources\Icon\file-fill.png" />
     <Content Include="Resources\Icon\bug-report.png" />
     <Content Include="Resources\Icon\HMTBatchJobToolWindowCommand.png" />
