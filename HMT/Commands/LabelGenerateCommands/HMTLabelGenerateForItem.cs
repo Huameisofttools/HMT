@@ -62,7 +62,6 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
                 throw new ArgumentNullException("package");
             }
             this.package = package;
-            //OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             bool flag2 = commandService != null;
             if (flag2)
             {
@@ -70,8 +69,8 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
                 commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
                 var menuCommandID = new CommandID(CommandSet, CommandId);
-                OleMenuCommand menuItem = new OleMenuCommand(new EventHandler(this.Execute), menuCommandID);               
-                menuItem.BeforeQueryStatus += this.projectmenuItem_BeforeQueryStatus;                
+                OleMenuCommand menuItem = new OleMenuCommand(new EventHandler(this.Execute), menuCommandID);
+                // menuItem.BeforeQueryStatus += this.projectmenuItem_BeforeQueryStatus; Disable validation logic temporarily because of multiple selection features​.            
                 commandService.AddCommand(menuItem);
 
                 // Register DocCommandId
@@ -202,20 +201,31 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
                 }
 
                 if (e != null) 
-                {                    
-                    ProjectItem projectItem = MyDte.SelectedItems.Item(1).ProjectItem;
-                    IMetaElement item = LocalUtils.getNamedElementFromProjectItem(projectItem);
+                {
+                    SelectedItems selectedItems = MyDte.SelectedItems; // 2.6.7 version should support multiple selected.
 
-                    if (item == null)
+                    foreach (SelectedItem selectedItem in selectedItems)
                     {
-                        throw new Exception("The selected item is not supported.");
-                    }
+                        ProjectItem projectItem = selectedItem.ProjectItem;
 
-                    HMLabelService labelService = HMLabelService.construct(item, generateForCodeLabel, false);
-                    
-                    if (labelService != null)
-                    {
-                        labelService.runAX();
+                        if (projectItem == null) 
+                        {
+                            continue;
+                        }
+
+                        IMetaElement item = LocalUtils.getNamedElementFromProjectItem(projectItem);
+
+                        if (item == null)
+                        {
+                            continue;
+                        }
+
+                        HMLabelService labelService = HMLabelService.construct(item, generateForCodeLabel, false);
+
+                        if (labelService != null)
+                        {
+                            labelService.runAX();
+                        }
                     }
                 }
 
@@ -275,6 +285,14 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
             return labelId;
         }
 
+        /// <summary>
+        /// Willie Yao - 2025/01/07
+        /// Validate this label value is not the label Id.
+        /// </summary>
+        /// <param name="labelValue">Label value</param>
+        /// <returns>
+        /// True if label value is not lable id.
+        /// </returns>
         public static bool ValidateLabelValue(string labelValue)
         {
             bool ret = false;
