@@ -6,15 +6,11 @@ using EnvDTE;
 using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using EnvDTE80;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation;
-using Microsoft.VisualStudio.Shell.Interop;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
 using HMT.HMTLabelGenerator;
-using HMT.HMTCommands.HMTPrivilegeAndDutyGeneratorCommands;
 using HMT.OptionsPane;
+using System.Text.RegularExpressions;
 
 namespace HMT.HMTCommands.HMTLabelGenerateCommands
 {
@@ -27,6 +23,11 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
         /// Command ID.
         /// </summary>
         public const int CommandId = 0x0130;
+
+        /// <summary>
+        /// The command Id for x++ text document
+        /// </summary>
+        public const int DocCommandId = 0x0137;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -69,10 +70,44 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
                 commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
                 var menuCommandID = new CommandID(CommandSet, CommandId);
-                OleMenuCommand menuItem = new OleMenuCommand(new EventHandler(this.Execute), menuCommandID);
-                
+                OleMenuCommand menuItem = new OleMenuCommand(new EventHandler(this.Execute), menuCommandID);               
                 menuItem.BeforeQueryStatus += this.projectmenuItem_BeforeQueryStatus;                
                 commandService.AddCommand(menuItem);
+
+                // Register DocCommandId
+                var menuDocCommandID = new CommandID(CommandSet, DocCommandId);
+                OleMenuCommand docMenuItem = new OleMenuCommand(new EventHandler(this.PasteLabel), menuDocCommandID);
+                docMenuItem.BeforeQueryStatus += this.validateIfAxClass;
+                commandService.AddCommand(docMenuItem);
+            }
+        }
+
+        private void validateIfAxClass(object sender, EventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            OleMenuCommand docMenuItem = sender as OleMenuCommand;
+            bool flag = docMenuItem != null;
+            if (flag)
+            {
+                bool isEnabled = false;
+                EnvDTE80.DTE2 dte = this.ServiceProvider.GetService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+                if (dte == null)
+                {
+                    isEnabled = false;
+                }
+
+                bool _flag = dte.ActiveDocument != null;
+
+                if (_flag)
+                {
+                    bool flag2 = dte.ActiveDocument.Name.IndexOf("AxClass") >= 0;
+                    if (flag2)
+                    {
+                        isEnabled = true;
+                    }
+                }
+
+                docMenuItem.Enabled = isEnabled;
             }
         }
 
@@ -84,7 +119,6 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
             if (flag)
             {
                 bool isEnabled = this.checkOpened();
-                //menuCommand.Visible = CiellosTools.D365.CiellosUtils.getIsParmMethodActivated(this.package);
                 menuCommand.Enabled = isEnabled;
             }
         }
@@ -133,8 +167,6 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
         /// <param name="package">Owner package, not null.</param>
         public static async System.Threading.Tasks.Task InitializeAsync(AsyncPackage package)
         {
-            //await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new HMTLabelGenerateForItem(package, commandService);
         }
@@ -194,5 +226,65 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
                 CoreUtility.HandleExceptionWithErrorMessage(ex);
             }
         }
+
+        /// <summary>
+        /// Willie Yao - 2025/01/07
+        /// This method used to paste label to x++ text document directly.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
+        private void PasteLabel(object sender, EventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            HMTProjectService projectService = new HMTProjectService();
+            Project projectNode = projectService.currentProject();
+            if (projectNode == null || projectService.currentLabelNode() == null)
+            {
+                throw new Exception("Please put the label file in your project.");
+            }
+
+            DTE MyDte = CoreUtility.ServiceProvider.GetService(typeof(DTE)) as DTE;
+            Document doc = MyDte.ActiveDocument;
+            TextSelection text = (TextSelection)doc.Selection; 
+            string selectedText = text.Text;
+            text.Text = GenerateLabelId(selectedText);
+        }
+
+        /// <summary>
+        /// Willie Yao - 2025/01/07
+        /// Generate label id from input string
+        /// </summary>
+        /// <param name="labelValue">Label value</param>
+        /// <returns></returns>
+        private static string GenerateLabelId(string labelValue)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            HMTProjectService projectService = new HMTProjectService();
+            Project projectNode = projectService.currentProject();
+            ProjectItem labelFileNode = projectService.currentLabelNode() as ProjectItem;
+            AxLabelFile labelFile = projectService.currentModel().GetLabelFile(labelFileNode.Name);
+            LabelManager labelManager = new LabelManager(labelFile.LabelFileId, labelFile, projectNode.Name);
+            string labelId = string.Empty;
+
+            if (ValidateLabelValue(labelValue))
+            {
+                labelId = labelManager.createLabel(labelValue);
+            }
+
+            return labelId;
+        }
+
+        public static bool ValidateLabelValue(string labelValue)
+        {
+            bool ret = false;
+
+            if (!labelValue.StartsWith("@") && labelValue != "" && Regex.Replace(labelValue, @"[^a-zA-z]", "") != "")
+            {
+                ret = true;
+            }
+
+            return ret;
+        }        
     }
 }

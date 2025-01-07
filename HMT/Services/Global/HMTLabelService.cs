@@ -35,29 +35,7 @@ namespace HMT.HMTLabelGenerator
         public Project project;
 
         public HMTLabelService()
-        {
-            //if (project != null)
-            //{
-            //    HMTProjectService projectService = new HMTProjectService();
-            //    Project projectNode = projectService.currentProject(project);
-            //    ProjectItem labelFileNode = projectService.currentLabelNode() as ProjectItem;
-            //    AxLabelFile labelFile = projectService.currentModel().GetLabelFile(labelFileNode.Name);
-
-            //    labelManager = new LabelManager(labelFile.LabelFileId, labelFile, project.Name);
-            //    metaModelService = projectService.currentModel();
-            //    generateForCode = false;
-            //}
-            //else
-            //{
-            //    HMTProjectService projectService = new HMTProjectService();
-            //    Project projectNode = projectService.currentProject();
-            //    ProjectItem labelFileNode = projectService.currentLabelNode() as ProjectItem;
-            //    AxLabelFile labelFile = projectService.currentModel().GetLabelFile(labelFileNode.Name);
-
-            //    labelManager = new LabelManager(labelFile.LabelFileId, labelFile, projectNode.Name);
-            //    metaModelService = projectService.currentModel();
-            //    generateForCode = false;
-            //}           
+        {          
         }
 
         public void initial(AsyncPackage asyncPackage)

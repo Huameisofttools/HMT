@@ -138,6 +138,14 @@
 		  <ButtonText>Generate Parm Method</ButtonText>
 		</Strings>
 	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTPasteLabelInDocCommand" priority="0x0100" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecEditorGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+		<CommandFlag>DynamicVisibility</CommandFlag>
+		<Strings>
+		  <ButtonText>Paste Label Symbol For String</ButtonText>
+		</Strings>
+	  </Button>
 	  <Button guid="guidHMTPackageCmdSet" id="HMTFindExistGeneratorCmd" priority="0x1207" type="Button">
 		<Parent guid="guidHMTPackageGroupSet" id="HMTSecItemGroup" />
 		<Icon guid="guidImages" id="HMLOGO" />
@@ -222,6 +230,7 @@
 	  <IDSymbol name="HMTUserIssueFeedbackCommand" value="0x0131" />
 	  <IDSymbol name="HMTUserSuggestCommand" value="0x0133" />
 	  <IDSymbol name="HMTUserGuideCommand" value="0x0135" />
+	  <IDSymbol name="HMTPasteLabelInDocCommand" value="0x0137" />
     </GuidSymbol>
 
 	<GuidSymbol name="guidHMTPackageMenuSet" value="{1041a140-1cb6-44a5-9704-25bd0f8508ca}">
