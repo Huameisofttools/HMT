@@ -2,24 +2,18 @@
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using HMT.Kernel;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using Microsoft.Dynamics.AX.Metadata.Core.Collections;
-using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using EnvDTE80;
 
 namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
 {
     public partial class HMTParmMethodGenerateDialog : Form
     {
         HMTParmMethodGenerateService parmMethodGenerateService;
+        EnvDTE80.DTE2 envDTE80;
 
         public HMTParmMethodGenerateDialog()
         {
@@ -38,7 +32,8 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
         {
             try
             {
-                ThreadHelper.ThrowIfNotOnUIThread();
+                ThreadHelper.ThrowIfNotOnUIThread();               
+
                 var axClassMemberVariables = parmMethodGenerateService.axClass.Members;
                 var checkedItems = checkedListBox1.CheckedItems;
                 var objectCollection = checkedListBox1.Items;
@@ -48,7 +43,6 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
                     MessageBox.Show("Please select at least one member variable.");
                     return;
                 }
-
 
                 var objectCollectionList = objectCollection.Cast<object>().ToList();
                 foreach (var memberVariable in checkedItems)
@@ -61,14 +55,10 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
                         continue;
                     }
 
-                    var methodName = formatParmMethodNameFromMemberVariable(memberName);
                     var axClassMemberVariable = axClassMemberVariables[index];
-                    var parmMethodCode = parmMethodGenerateService.generateParmMethod(axClassMemberVariable.Type, axClassMemberVariable.TypeName, memberName, methodName, formatParmMethodParameterNameFromMemberVariable(memberName), false);
-                    var axMethod = HMTParmMethodGenerateService.addMethod(methodName, parmMethodCode);
-                    axMethod.Visibility = CompilerVisibility.Public;
-                    parmMethodGenerateService.axClass.AddMethod(axMethod);
+                    parmMethodGenerateService.parmAxClassMemberVariable(axClassMemberVariable);                    
+                    parmMethodGenerateService.paste();
                 }
-                parmMethodGenerateService.updateAxClass();
                 Close();
             }
             catch (Exception ex)
@@ -88,37 +78,14 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
             }
 
             setCheckedListBox1(isPrivate);
-        }
+        }        
 
-        public void initParameters(HMTParmMethodGenerateService service)
+        public void initParameters(HMTParmMethodGenerateService service, DTE2 dTE)
         {
             parmMethodGenerateService = service;
-
+            envDTE80 = dTE;
             initComboBox1();
-        }
-
-        protected string getParmMethodNameFromCheckedList(bool useSelected = false)
-        {
-            string parmMethodName = "";
-            if (useSelected)
-            {
-                var allSelectedVariable = checkedListBox1.SelectedItems;   
-                foreach (var memberVariable in allSelectedVariable)
-                {
-                    parmMethodName += "parm" + memberVariable + "\n";
-                }
-            }
-            else
-            {
-                var allMemberVariable = checkedListBox1.Items;
-                foreach (var memberVariable in allMemberVariable)
-                {
-                    parmMethodName += "parm" + memberVariable + "\n";
-                }
-            }           
-
-            return parmMethodName;
-        }
+        }        
 
         public void initComboBox1()
         {
@@ -185,48 +152,6 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
         private void comboBox_resize(object sender, EventArgs e)
         {
             AutoControlSize.ChangeFormControlSize(this);
-        }
-
-        /// <summary>
-        /// Willie Yao - 12/25/2024
-        /// Format method name from variable name.
-        /// </summary>
-        /// <param name="memberVariableName">Member variable name</param>
-        /// <returns>ParmMethodName</returns>
-        private string formatParmMethodNameFromMemberVariable(string memberVariableName)
-        {
-            char firstChar = memberVariableName[0];
-
-            if (firstChar == 'g')
-            {
-                return "parm" + memberVariableName.Substring(1);
-            }
-            else
-            {
-                return "parm" + char.ToUpper(firstChar) + memberVariableName.Substring(1);
-            }
-        }
-
-        /// <summary>
-        /// Willie Yao - 12/25/2024
-        /// Format parameter name from variable name.
-        /// </summary>
-        /// <param name="memberVariableName">Member variable name</param>
-        /// <returns>Parameter name</returns>
-        private string formatParmMethodParameterNameFromMemberVariable(string memberVariableName)
-        {
-            char firstChar = memberVariableName[0];
-
-            if (firstChar == 'g')
-            {
-                char secondChar = memberVariableName[1];
-                string memberVariableWithout_g = memberVariableName.Substring(1);
-                return char.ToLower(secondChar) + memberVariableWithout_g.Substring(1);
-            }
-            else
-            {
-                return "parm" + char.ToUpper(firstChar) + memberVariableName.Substring(1);
-            }
         }
     }
 }
