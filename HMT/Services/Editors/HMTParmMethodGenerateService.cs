@@ -1,88 +1,144 @@
-﻿using System.Linq;
-using Microsoft.Dynamics.AX.Metadata.MetaModel;
+﻿using Microsoft.Dynamics.AX.Metadata.MetaModel;
 using EnvDTE;
-using Microsoft.Dynamics.AX.Metadata.Service;
 using HMT.Kernel;
-using HMT.HMTBatchJobTemplateGenerator;
-using Microsoft.Dynamics.Framework.Tools.Core;
-using Microsoft.Dynamics.Framework.Tools.Extensibility;
-using Microsoft.Dynamics.Framework.Tools.ProjectSystem;
 using System.Globalization;
-using System;
-using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.VisualStudio.Shell;
 
 namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
 {
-    public class HMTParmMethodGenerateService
+    public class HMTParmMethodGenerateService : HMTTemplate
     {
-        public IMetaModelService metaModelService;
         public AxClass axClass;
+        private new object obj;
+        public AxClassMemberVariable axMemberVariable;
 
         /// <summary>
-        /// Willie Yao - 2024/04/02
-        /// Generate the parm method metadata string
+        /// AxClass method parm method
         /// </summary>
-        /// <returns>Parm method metadata string</returns>
-        public string generateParmMethod(CompilerBaseType type, string typeName, string memberName, string methodName, string variableName, bool comment = false)
+        /// <param name="_axClass">AxClass</param>
+        public void parmAxClass(AxClass _axClass)
         {
-            CodeGenerateHelper generateHelper = new CodeGenerateHelper();
-            generateHelper.IndentSetValue(4);
-            string typeNameStr = AxTypeHelper.getTypeStr(type, typeName);
-            if (comment)
-            {
-                //generateHelper.AppendLine($"/// <summary>");
-                //generateHelper.AppendLine($"/// ");
-                //generateHelper.AppendLine($"/// </summary>");
-                //generateHelper.AppendLine($"/// <param name = \"_recId\">the record id</param>");
-                //generateHelper.AppendLine($"/// <param name = \"_forUpdate\">if its updatable</param>");
-                //generateHelper.AppendLine($"/// <returns>a table </returns>");
-            }
-            generateHelper.AppendLine($"public {typeNameStr} {methodName}({typeNameStr} _{variableName} = {memberName})");
-            generateHelper.AppendLine("{");
-            generateHelper.IndentIncrease();
-            generateHelper.AppendLine($"{memberName} = _{variableName};");
-            generateHelper.AppendLine("return " + memberName + ";");
-            generateHelper.IndentDecrease();
-            generateHelper.AppendLine("}");
-
-            return generateHelper.ResultString.ToString();
-        }
-
-        public HMTParmMethodGenerateService(AxClass _axClass)
-        {
-            HMTProjectService projectService = new HMTProjectService();
-            metaModelService = projectService.currentModel();
             axClass = _axClass;
         }
 
-        public void updateAxClass()
+        /// <summary>
+        /// AxClassMemberVariable parm method
+        /// </summary>
+        /// <param name="axClassMemberVariable">AxClassMemberVariable</param>
+        public void parmAxClassMemberVariable(AxClassMemberVariable axClassMemberVariable)
+        {
+            axMemberVariable = axClassMemberVariable;
+        }
+
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="_dte">DTE</param>
+        /// <param name="_method">method</param>
+        /// <param name="_AxElement">AxElement</param>
+        public HMTParmMethodGenerateService(EnvDTE80.DTE2 _dte, string _method, object _AxElement = null) : base(_dte, _method, _AxElement)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            if (metaModelService != null)
-            {                
-                DTE service = AxServiceProvider.GetService<DTE>();
-                if (service == null)
-                {
-                    throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "No service for DTE found. The DTE must be registered as a service for using this API.", new object[0]));
-                }
-
-                // Get current element's model information.
-                VSProjectNode activeProjectNode = HMTBatchJobGenerateService.currentVSProject(service); 
-                ModelInfo gModel = activeProjectNode.GetProjectsModelInfo();
-
-                ModelSaveInfo saveInfo = new ModelSaveInfo(gModel);                
-                metaModelService.UpdateClass(axClass, saveInfo);              
+            try
+            {
+                this.obj = HMTUtils.getAOTObjectByName(this.doc.Name);
+            }
+            catch
+            {
             }
         }
 
-        public static AxMethod addMethod(string methodName, string code)
+        public override bool validate()
         {
-            AxMethod metaMethod = new AxMethod();
-            metaMethod.Name = methodName;
-            metaMethod.Source = code;
-            metaMethod.IsExtendedMethod = false;
-            return metaMethod;
+            return true;
+        }
+
+        public override void paste()
+        {
+            try
+            {
+                this.prepareParmMethod(axClass, axMemberVariable);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Willie Yao - 01/07/2024
+        /// Add parm method for class
+        /// </summary>
+        /// <param name="classObj">AxClass</param>
+        /// <param name="var">AxClassMemberVariable</param>
+        private void prepareParmMethod(AxClass classObj, AxClassMemberVariable var)
+        {                       
+            ThreadHelper.ThrowIfNotOnUIThread();
+            string name = classObj.Name;
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+            this.text.EndOfDocument(false);
+            for (int i = this.text.CurrentLine; i >= 1; i--)
+            {
+                this.text.SelectLine();
+                bool flag = this.text.Text.IndexOf("}") >= 0;
+                if (flag)
+                {
+                    this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+                    this.text.NewLine(1);
+                    break;
+                }
+                this.text.LineUp(false, 1);
+            }
+            int currentLine = this.text.CurrentLine;
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.NewLine(1);
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.Insert(string.Concat(new string[]
+            {
+                HMTTemplate.tab1,
+                "public ",
+                HMTUtils.getAxType(var),
+                ((var.Name[0] == 'g') ? " parm" + var.Name.Substring(1) : " parm" + char.ToUpper(var.Name[0]) + var.Name.Substring(1)),
+                "(",
+                HMTUtils.getAxType(var),
+                " _",
+                ((var.Name[0] == 'g') ? char.ToLower(var.Name.Substring(1)[0]) + var.Name.Substring(2) : var.Name),
+                " = ",
+                var.Name,
+                ")"
+            }), 1);
+            this.text.NewLine(1);
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.Insert(HMTTemplate.tab1 + "{", 1);
+            this.text.NewLine(1);
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.Insert(string.Concat(new string[]
+            {
+                HMTTemplate.tab2,
+                var.Name,
+                " = _",
+                ((var.Name[0] == 'g') ? char.ToLower(var.Name.Substring(1)[0]) + var.Name.Substring(2) : var.Name),
+                ";"
+            }), 1);
+            this.text.NewLine(1);
+            this.text.NewLine(1);
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.Insert(HMTTemplate.tab2 + "return " + var.Name + ";", 1);
+            this.text.NewLine(1);
+            this.text.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstColumn, false);
+            this.text.Insert(HMTTemplate.tab1 + "}", 1);
+            this.text.NewLine(1);
+            this.text.SelectLine();
+            this.text.Insert(this.text.Text.Trim(), 1);
+            this.text.GotoLine(currentLine, false);
+            this.text.Insert(HMTTemplate.tab1 + "/// <summary>", 1);
+            this.text.NewLine(1);
+            this.text.Insert("Standard parm method.", 1);
+            this.text.NewLine(1);
+            this.text.Insert("</summary>", 1);
+            this.text.NewLine(1);
+            this.text.Insert("<param name = \"_" + var.Name + "\">Value to set.</param>", 1);
+            this.text.NewLine(1);
+            this.text.Insert("<returns>Return value.</returns>", 1);
         }
     }
 

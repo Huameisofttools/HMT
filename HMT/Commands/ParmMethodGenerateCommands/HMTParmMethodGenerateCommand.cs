@@ -2,16 +2,9 @@
 using System;
 using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
-using EnvDTE;
-using System.Collections.Generic;
-using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using EnvDTE80;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
 using HMT.HMTAXEditorUtils.HMTParmMethodGenerator;
-using Microsoft.VisualStudio.Shell.Interop;
 
 namespace HMT.HMTCommands.HMTParmMethodGenerateCommands
 {
@@ -131,9 +124,10 @@ namespace HMT.HMTCommands.HMTParmMethodGenerateCommands
 
                 AxClass axClass = obj as AxClass;
 
-                HMTParmMethodGenerateService service = new HMTParmMethodGenerateService(axClass);
+                HMTParmMethodGenerateService service = new HMTParmMethodGenerateService(dte, "", null);
+                service.parmAxClass(axClass);
                 HMTParmMethodGenerateDialog dialog = new HMTParmMethodGenerateDialog();
-                dialog.initParameters(service);
+                dialog.initParameters(service, dte);
                 dialog.ShowDialog();
             }
         }

@@ -59,7 +59,12 @@
     <Compile Include="Commands\UserFeedbackCommands\HMTUserSuggestCommand.cs" />
     <Compile Include="Commands\UserGuideCommands\HMTUserGuideCommand.cs" />
     <Compile Include="Kernel\AutoControlSize.cs" />
+    <Compile Include="Kernel\ClassDC.cs" />
     <Compile Include="Kernel\CreateXppItem.cs" />
+    <Compile Include="Kernel\HMTDynamicsProcessor.cs" />
+    <Compile Include="Kernel\HMTPasteText.cs" />
+    <Compile Include="Kernel\HMTTemplate.cs" />
+    <Compile Include="Kernel\HMTUtils.cs" />
     <Compile Include="Kernel\IStrategy.cs" />
     <Compile Include="Views\Editors\HMTParmMethodGenerateDialog.cs">
       <SubType>Form</SubType>
@@ -303,6 +308,10 @@
     <Reference Include="Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Configuration.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Configuration.17.0.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics.Framework.Tools.Core.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
