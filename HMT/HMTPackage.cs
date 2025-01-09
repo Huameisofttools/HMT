@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
+using HMT.Models;
+using System.Windows.Controls;
 
 namespace HMT
 {
@@ -37,6 +39,7 @@ namespace HMT
     [Guid("4ab38674-8342-44af-9ef8-fdaf145c8972")]    
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(HMTOptions), "HMT D365FFO tools", "D365FFO Page", 0, 0, true)]
+    [ProvideToolWindow(typeof(HMT.Views.Global.HMTJsonToDataContractWindow))]
     public sealed class HMTPackage : AsyncPackage
     {
         /// <summary>
@@ -65,7 +68,7 @@ namespace HMT
             await HMTCommands.HMTFormGeneratorCommand.HMTFormGenerateCommand.InitializeAsync(this);
             await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForItem.InitializeAsync(this);
             await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForProject.InitializeAsync(this);
-            // await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForAll.InitializeAsync(this); // This function abandoned
+            // await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForAll.InitializeAsync(this); This function abandoned
             await HMTCommands.HMTParmMethodGenerateCommands.HMTParmMethodGenerateCommand.InitializeAsync(this);
             await HMTCommands.HMTFindExistGeneratorCmd.HMTFindExistGeneratorCmd.InitializeAsync(this);
             await HMTCommands.HMTExtendAxElementCmd.HMTExtendAxElementCmd.InitializeAsync(this);
@@ -75,8 +78,38 @@ namespace HMT
             await HMTUserIssueFeedbackCommand.InitializeAsync(this);
             await HMTUserSuggestCommand.InitializeAsync(this);
             await HMTUserGuideCommand.InitializeAsync(this);
+            await Commands.WindowCommands.HMTJsonToDataContractWindowCommand.InitializeAsync(this);
         }
-    }
 
-    
+        /// <summary>
+        /// Willie Yao - 01/08/2025
+        /// Override GetAsyncToolWindowFactory method
+        /// </summary>
+        /// <param name="toolWindowType">toolWindowType</param>
+        /// <returns>IVsAsyncToolWindowFactory</returns>
+        public override IVsAsyncToolWindowFactory GetAsyncToolWindowFactory(Guid toolWindowType)
+        {
+            return toolWindowType.Equals(Guid.Parse("e5775bcc-3ede-465c-876b-73cd0aba9cfb")) ? this : null;
+        }
+
+        /// <summary>
+        /// Willie Yao - 01/08/2025
+        /// Override InitializeToolWindowAsync method for transit some data
+        /// </summary>
+        /// <param name="toolWindowType">toolWindowType</param>
+        /// <param name="id">id</param>
+        /// <param name="cancellationToken">cancellationToken</param>
+        /// <returns></returns>
+        protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
+        {
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            var dte = await this.GetServiceAsync(typeof(EnvDTE.DTE)) as DTE2;
+            return new HMTJsonToDataContractToolWindowData
+            {
+                DTE = dte,
+                Package = this,
+                TextBox = new System.Windows.Forms.TextBox() { Name = nameof(TextBox) }
+            };
+        }
+    }    
 }

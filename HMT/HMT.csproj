@@ -66,6 +66,7 @@
     <Compile Include="Kernel\HMTTemplate.cs" />
     <Compile Include="Kernel\HMTUtils.cs" />
     <Compile Include="Kernel\IStrategy.cs" />
+    <Compile Include="Models\HMTJsonToDataContractToolWindowData.cs" />
     <Compile Include="Views\Editors\HMTParmMethodGenerateDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +81,11 @@
       <DependentUpon>HMTBatchJobGenerateDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Global\HMTBatchJobGenerateService.cs" />
+    <Compile Include="Views\Global\HMTJsonToDataContractWindow.cs" />
+    <Compile Include="Commands\WindowCommands\HMTJsonToDataContractWindowCommand.cs" />
+    <Compile Include="Views\Global\HMTJsonToDataContractWindowControl.xaml.cs">
+      <DependentUpon>HMTJsonToDataContractWindowControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Projects\CreateExtensionClassDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,7 +234,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="README.txt" />
     <Content Include="Resources\Icon\file-fill.png" />
     <Content Include="Resources\Icon\bug-report.png" />
     <Content Include="Resources\Icon\HMTBatchJobToolWindowCommand.png" />
@@ -370,6 +375,15 @@
     <PackageReference Include="Microsoft.VisualStudio.SDK">
       <Version>17.12.40392</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Global\HMTJsonToDataContractWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
