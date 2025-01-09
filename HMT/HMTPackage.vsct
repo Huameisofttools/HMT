@@ -199,6 +199,13 @@
 		  <ButtonText>User guide</ButtonText>
 		</Strings>
 	  </Button>
+      <Button guid="guidHMTPackageCmdSet" id="cmdidHMTJsonToDataContractWindowCommand" priority="0x0139" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		  <Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>HMTJsonToDataContractWindow</ButtonText>
+        </Strings>
+      </Button>
     </Buttons> 
 	  
     <Bitmaps>
@@ -231,6 +238,7 @@
 	  <IDSymbol name="HMTUserSuggestCommand" value="0x0133" />
 	  <IDSymbol name="HMTUserGuideCommand" value="0x0135" />
 	  <IDSymbol name="HMTPasteLabelInDocCommand" value="0x0137" />
+      <IDSymbol name="cmdidHMTJsonToDataContractWindowCommand" value="0x0139" />
     </GuidSymbol>
 
 	<GuidSymbol name="guidHMTPackageMenuSet" value="{1041a140-1cb6-44a5-9704-25bd0f8508ca}">
