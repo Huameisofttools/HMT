@@ -34,6 +34,18 @@ namespace HMT.Views.Global
             Data = data;
         }
 
+        private bool IsKeyNodeExist(ItemsControl parent, string key)
+        {
+            foreach (TreeViewItem subItems in parent.Items)
+            {
+                if ((string)subItems.Header == key)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Willie Yao - 01/08/2025
         /// LoadJsonButton click method
@@ -73,23 +85,12 @@ namespace HMT.Views.Global
         {
             if (token is JProperty property)
             {
-                bool ExistKeyNode = false;
-                //  Validate whether the same items exist at the same level.
-                foreach (TreeViewItem subItems in parent.Items)
-                {
-                    if ((string)subItems.Header == property.Name)
-                    {
-                        ExistKeyNode = true;
-                        break;
-                    }
-                }
-
-                if (!ExistKeyNode)
+                if (!IsKeyNodeExist(parent, property.Name))
                 {
                     var node = new TreeViewItem { Header = property.Name };
                     parent.Items.Add(node);
                     PopulateTreeView(property.Value, node);
-                }                
+                }
             }
             else if (token is JObject obj)
             {
@@ -107,7 +108,7 @@ namespace HMT.Views.Global
                     PopulateTreeView(item, node);
                 }
             }
-            else // JValue
+            else
             {
                 parent.Items.Add(new TreeViewItem { Header = token.ToString() });
             }
@@ -139,9 +140,13 @@ namespace HMT.Views.Global
             {
                 JObject jsonObject = JObject.Parse(jsonInput.Text);
                 GenerateXppDataContract(jsonObject, HMTOptionsUtils.getPrefix(Data.Package), className.Text);
-                
+
                 jsonInput.Clear();
-                className.Clear();                
+                className.Clear();
+            }
+            catch (JsonException ex)
+            {
+                MessageBox.Show($"Error parsing JSON: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -162,29 +167,19 @@ namespace HMT.Views.Global
             AxHelper axHelper = new AxHelper();
             className = char.ToUpper(className[0]) + className.Substring(1);
             AxClass newClass = new AxClass() { Name = $"{prefix}{className}", IsPublic = true };
-            newClass.IsPublic = true;
 
             sb.AppendLine("[DataContractAttribute]");
             sb.AppendLine($"class {prefix}{className}");
             sb.AppendLine("{");
 
             foreach (var property in jsonObject.Properties())
-            { 
-                if (property.Value is JArray)
-                {
-                    sb.AppendLine($"    List {property.Name};");
-                    sb.AppendLine();
-                }
-                else
-                {
-                    string typeName = "str";
-                    sb.AppendLine($"    {typeName} {property.Name};");
-                    sb.AppendLine();
-                }
+            {
+                string typeName = property.Value is JArray ? "List" : "str";
+                sb.AppendLine($"    {typeName} {property.Name};");
+                sb.AppendLine();
             }
 
             sb.AppendLine("}");
-            // Set the declaration, including the class name and variable members.
             newClass.SourceCode.Declaration = sb.ToString();
             sb.Clear();
 
@@ -192,24 +187,13 @@ namespace HMT.Views.Global
             foreach (var property in jsonObject.Properties())
             {
                 string propertyName = property.Name;
-                string wavePropertyName = char.ToUpper(property.Name[0]) + propertyName.Substring(1);
-                if (property.Value is JArray)
+                string wavePropertyName = char.ToUpper(propertyName[0]) + propertyName.Substring(1);
+                string typeName = property.Value is JArray ? "List" : "str";
+
+                if (property.Value is JArray array)
                 {
-                    // Assuming all items in the array are similar. Get the first one only.
-                    // Distinguish JObject and JValue
-                    JToken firstItem = ((JArray)property.Value)[0];
-                    if (firstItem is JValue)
-                    {
-                        string typeName = "List";
-                        sb.AppendLine($"    [DataMemberAttribute(\"{propertyName}\"), SysOperationDisplayOrder('{order}')]");
-                        sb.AppendLine($"    public {typeName} parm{wavePropertyName}({typeName} _{propertyName} = {propertyName})");
-                        sb.AppendLine("    {");
-                        sb.AppendLine($"        {propertyName} = _{propertyName};");
-                        sb.AppendLine($"        return {propertyName};");
-                        sb.AppendLine("    }");
-                        sb.AppendLine();
-                    }
-                    else
+                    JToken firstItem = array.First;
+                    if (firstItem is JObject)
                     {
                         sb.AppendLine($"    [DataMemberAttribute(\"{propertyName}\"), DataCollection(Types::Class, classStr({prefix}{wavePropertyName}Contract)), SysOperationDisplayOrder('{order}')]");
                         sb.AppendLine($"    public List parm{wavePropertyName}(List _{propertyName} = {propertyName})");
@@ -219,13 +203,21 @@ namespace HMT.Views.Global
                         sb.AppendLine("    }");
                         sb.AppendLine();
 
-                        JObject subJsonObject = (JObject)firstItem;
-                        GenerateXppDataContract(subJsonObject, prefix, $"{wavePropertyName}Contract"); // Recursive processing of JSON nodes
-                    }                    
+                        GenerateXppDataContract((JObject)firstItem, prefix, $"{wavePropertyName}Contract");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"    [DataMemberAttribute(\"{propertyName}\"), SysOperationDisplayOrder('{order}')]");
+                        sb.AppendLine($"    public {typeName} parm{wavePropertyName}({typeName} _{propertyName} = {propertyName})");
+                        sb.AppendLine("    {");
+                        sb.AppendLine($"        {propertyName} = _{propertyName};");
+                        sb.AppendLine($"        return {propertyName};");
+                        sb.AppendLine("    }");
+                        sb.AppendLine();
+                    }
                 }
                 else
                 {
-                    string typeName = "str";
                     sb.AppendLine($"    [DataMemberAttribute(\"{propertyName}\"), SysOperationDisplayOrder('{order}')]");
                     sb.AppendLine($"    public {typeName} parm{wavePropertyName}({typeName} _{propertyName} = {propertyName})");
                     sb.AppendLine("    {");
@@ -234,7 +226,6 @@ namespace HMT.Views.Global
                     sb.AppendLine("    }");
                     sb.AppendLine();
                 }
-                order++;
 
                 newClass.AddMethod(new AxMethod()
                 {
@@ -243,6 +234,7 @@ namespace HMT.Views.Global
                 });
 
                 sb.Clear();
+                order++;
             }
 
             axHelper.MetaModelService.CreateClass(newClass, axHelper.ModelSaveInfo);
