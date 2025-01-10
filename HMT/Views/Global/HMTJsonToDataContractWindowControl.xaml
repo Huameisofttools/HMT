@@ -3,20 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-             Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
-             Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"   
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="400"
-             Name="MyToolWindow">
-    <Grid>
-        <StackPanel Grid.Column="0" Margin="10">
-            <TextBox x:Name="jsonInput" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="250" AcceptsTab="True"/>
-            <Label>Class Name</Label>
-            <TextBox x:Name="className" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-            <Button x:Name="loadButton" Content="Load JSON" Margin="5" Click="LoadJsonButton_Click"/>
-            <Button x:Name="generateButton" Content="Generate X++" Margin="5" Click="GenerateButton_Click"/>
-            <TreeView x:Name="jsonTreeView" Grid.Column="1" Margin="10"/>
-        </StackPanel>
+             d:DesignHeight="500" d:DesignWidth="500"
+             Name="HMTJsonToDataContractWindow">
+    <Grid Background="#dae2ff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" x:Name="jsonInput"  AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsTab="True" Margin="10,10,0,10" />
+            <Label Grid.Row="1" Content="Please input Class Name" HorizontalAlignment="Center" VerticalAlignment="Top"  FontSize="10" FontFamily="Microsoft JhengHei" FontWeight="Bold" Height="23" Margin="0,10,0,0"/>
+            <TextBox Grid.Row="2" x:Name="className" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="24"/>
+            <Button Grid.Row="2" x:Name="generateButton" Click="GenerateButton_Click" Background="#2d344a" Foreground="White" Content="Generate" HorizontalAlignment="Center" VerticalAlignment="Top" Width="127" Height="24" FontFamily="Microsoft JhengHei" FontWeight="Bold" Margin="0,35,0,0" Grid.RowSpan="2"/>
+        </Grid>
+
+        <Button x:Name="loadButton" Click="LoadJsonButton_Click" Background="#2d344a" Foreground="White"  Grid.Column="1" Content=">" HorizontalAlignment="Center" Margin="0,115,0,0" Grid.Row="1" VerticalAlignment="Top" Width="30" Height="30" FontSize="18" FontWeight="Bold"/>
+        <TreeView x:Name="jsonTreeView" Grid.Column="2" Margin="0,10,10,10"/>
     </Grid>
 </UserControl>
