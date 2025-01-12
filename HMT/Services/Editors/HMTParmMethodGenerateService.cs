@@ -55,6 +55,7 @@ namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
 
         public override void paste()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
                 this.prepareParmMethod(axClass, axMemberVariable);

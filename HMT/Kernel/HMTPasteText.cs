@@ -61,6 +61,7 @@ namespace HMT.Kernel
         // Token: 0x0600007F RID: 127 RVA: 0x00004270 File Offset: 0x00002470
         private void prepareParmMethods(object _AxElement, ListBox.SelectedObjectCollection selectedItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             AxClass classObj = null;
             bool flag = _AxElement != null;
             if (flag)
@@ -83,10 +84,9 @@ namespace HMT.Kernel
             }
         }
 
-        // Token: 0x06000080 RID: 128 RVA: 0x00004328 File Offset: 0x00002528
         private void prepareParmMethod(AxClass classObj, AxClassMemberVariable var)
         {
-            ThreadHelper.ThrowIfNotOnUIThread("prepareParmMethod");
+            ThreadHelper.ThrowIfNotOnUIThread();
             string name = classObj.Name;
             TextInfo info = CultureInfo.CurrentCulture.TextInfo;
             this.text.EndOfDocument(false);

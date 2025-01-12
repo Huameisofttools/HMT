@@ -102,7 +102,6 @@ namespace HMT
         /// <returns></returns>
         protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
         {
-            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             var dte = await this.GetServiceAsync(typeof(EnvDTE.DTE)) as DTE2;
             return new HMTJsonToDataContractToolWindowData
             {

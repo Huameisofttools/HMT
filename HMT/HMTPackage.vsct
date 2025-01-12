@@ -203,7 +203,7 @@
         <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
 		  <Icon guid="guidImages" id="HMLOGO" />
         <Strings>
-          <ButtonText>HMTJsonToDataContractWindow</ButtonText>
+          <ButtonText>Json to Data Contract</ButtonText>
         </Strings>
       </Button>
     </Buttons> 
