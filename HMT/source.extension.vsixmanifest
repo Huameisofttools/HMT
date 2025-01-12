@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="HMT.2acd2b4f-4ef1-481e-8bb3-4b20b9a877a1" Version="2.6.7" Language="en-US" Publisher="Huamei Soft Tools" />
+        <Identity Id="HMT.2acd2b4f-4ef1-481e-8bb3-4b20b9a877a1" Version="2.6.9" Language="en-US" Publisher="Huamei Soft Tools" />
         <DisplayName>Huamei 365® D365FO Tools</DisplayName>
         <Description xml:space="preserve">This extension can be used to improve the development efficiency of D365F&amp;O solutions.</Description>
         <Icon>huamei logo.png</Icon>
