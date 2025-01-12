@@ -43,6 +43,7 @@ namespace HMT.Commands.WindowCommands
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
+
             commandService.AddCommand(menuItem);
         }
 
@@ -72,10 +73,6 @@ namespace HMT.Commands.WindowCommands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in HMTJsonToDataContractWindowCommand's constructor requires
-            // the UI thread.
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
             Instance = new HMTJsonToDataContractWindowCommand(package, commandService);
         }
@@ -85,16 +82,9 @@ namespace HMT.Commands.WindowCommands
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event args.</param>
-        private void Execute(object sender, EventArgs e)
+        private async void Execute(object sender, EventArgs e)
         {
-            this.package.JoinableTaskFactory.RunAsync(async delegate
-            {
-                ToolWindowPane window = await this.package.ShowToolWindowAsync(typeof(HMTJsonToDataContractWindow), 0, true, this.package.DisposalToken);
-                if ((null == window) || (null == window.Frame))
-                {
-                    throw new NotSupportedException("Cannot create tool window");
-                }
-            });
+            ToolWindowPane window = await package.ShowToolWindowAsync(typeof(HMTJsonToDataContractWindow), 0, true, package.DisposalToken);
         }
     }
 }

@@ -163,6 +163,7 @@ namespace HMT.Views.Global
         /// <param name="className">ClassName</param>
         public static void GenerateXppDataContract(JObject jsonObject, string prefix, string className)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             StringBuilder sb = new StringBuilder();
             AxHelper axHelper = new AxHelper();
             className = char.ToUpper(className[0]) + className.Substring(1);

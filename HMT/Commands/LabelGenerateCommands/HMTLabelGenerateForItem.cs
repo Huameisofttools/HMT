@@ -255,10 +255,12 @@ namespace HMT.HMTCommands.HMTLabelGenerateCommands
             }
 
             DTE MyDte = CoreUtility.ServiceProvider.GetService(typeof(DTE)) as DTE;
-            Document doc = MyDte.ActiveDocument;
-            TextSelection text = (TextSelection)doc.Selection; 
-            string selectedText = text.Text;
-            text.Text = GenerateLabelId(selectedText);
+            if (MyDte != null) {
+                Document doc = MyDte.ActiveDocument;
+                TextSelection text = (TextSelection)doc.Selection;
+                string selectedText = text.Text;
+                text.Text = GenerateLabelId(selectedText);
+            }
         }
 
         /// <summary>

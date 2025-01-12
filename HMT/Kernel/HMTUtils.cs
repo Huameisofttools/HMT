@@ -144,6 +144,7 @@ namespace HMT.Kernel
 
         public static ModelSaveInfo GetModel()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             ModelInfo projectsModelInfo = HMTUtils.GetActiveProjectNode().GetProjectsModelInfo(false);
             return new ModelSaveInfo
             {
@@ -1281,6 +1282,7 @@ namespace HMT.Kernel
 
         public static void addItemToProject(string _elementName, Type _type)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             HMTUtils.GetActiveProject().AddModelElementsToProject(new List<MetadataReference>
             {
                 new MetadataReference(_elementName, _type)
@@ -1352,6 +1354,7 @@ namespace HMT.Kernel
 
         public static List<AxLabelFile> getLabelFilesFromProjectV3(DTE _dte, string _name = "")
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             List<AxLabelFile> result = null;
             try
             {
