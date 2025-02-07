@@ -7,6 +7,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -25,7 +26,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HMT</RootNamespace>
     <AssemblyName>HMT</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -286,73 +287,56 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Dynamics.AX.Metadata, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.AX.Metadata.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.AX.Metadata">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.AX.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.AX.Metadata.Core, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.AX.Metadata.Core.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.AX.Metadata.Core">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.AX.Metadata.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.AX.Metadata.Extensions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.AX.Metadata.Extensions.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.AX.Metadata.Extensions">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.AX.Metadata.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.AX.Metadata.Modeling, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.AX.Metadata.Modeling.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.AX.Metadata.Modeling">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.AX.Metadata.Modeling.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.AX.Metadata.Storage, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.AX.Metadata.Storage.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.AX.Metadata.Storage">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.AX.Metadata.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.ApplicationExplorer.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.ApplicationExplorer.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.ApplicationExplorer.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.ApplicationExplorer.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.AutomationObjects.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.Configuration.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Configuration.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Configuration.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.Configuration.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.Core.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Core.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Core.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.Core.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.Extensibility.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Extensibility.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Extensibility.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.Extensibility.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.Integration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Integration.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Integration">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.Integration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.LabelEditor.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.LabelEditor.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.LabelEditor.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.LabelEditor.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.Labels.Resolvers, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.Labels.Resolvers.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.Labels.Resolvers">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.Labels.Resolvers.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.MetaModel.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.MetaModel.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.MetaModel.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.MetaModel.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.MetaModel.Core.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.MetaModel.Core.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.MetaModel.Core.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.MetaModel.Core.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.ProjectSupport.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.ProjectSupport.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.ProjectSupport.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.ProjectSupport.17.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamics.Framework.Tools.ProjectSystem.17.0, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\ggzcs5mj.quv\Microsoft.Dynamics.Framework.Tools.ProjectSystem.17.0.dll</HintPath>
+    <Reference Include="Microsoft.Dynamics.Framework.Tools.ProjectSystem.17.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Extensions\joi04lya.z1c\Microsoft.Dynamics.Framework.Tools.ProjectSystem.17.0.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
