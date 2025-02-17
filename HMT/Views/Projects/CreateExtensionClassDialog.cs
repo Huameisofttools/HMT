@@ -1,15 +1,10 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using HMT.Services.Projects;
+using HMT.Views.Settings;
+using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTClass.CreateExtensionClass
+namespace HMT.Views.Projects
 {
     public partial class CreateExtensionClassDialog : Form
     {
@@ -86,7 +81,7 @@ namespace HMT.HMTClass.CreateExtensionClass
 
         private void SetupNameButton_Click(object sender, EventArgs e)
         {
-            KernelSettings.HMTKernelSettings f = new KernelSettings.HMTKernelSettings(AsyncPackage);
+            HMTKernelSettings f = new HMTKernelSettings(AsyncPackage);
             f.ShowDialog();
 
             _parms.InitFromSettings();

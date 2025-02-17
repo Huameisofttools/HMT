@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
+namespace HMT.Views.Editors
 {
     partial class HMTParmMethodGenerateDialog
     {

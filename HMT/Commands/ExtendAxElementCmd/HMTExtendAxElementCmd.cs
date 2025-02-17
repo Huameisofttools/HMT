@@ -3,19 +3,12 @@ using System;
 using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
 using EnvDTE;
-using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using EnvDTE80;
 using HMT.Kernel;
-using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTClass.HMTExtendAxElement;
-using HMT.HMTClass.CreateExtensionClass;
-using HMT.HMTCommands.TableCommands;
-using HMT.HMTLabelGenerator;
-using Microsoft.Dynamics.Framework.Tools.Labels;
 using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
+using HMT.Views.Projects;
+using HMT.Services.Projects;
 
 namespace HMT.HMTCommands.HMTExtendAxElementCmd
 {
@@ -34,7 +27,6 @@ namespace HMT.HMTCommands.HMTExtendAxElementCmd
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
             OleMenuCommand menuItem = new OleMenuCommand(this.Execute, menuCommandID);
-            // menuItem.BeforeQueryStatus += this.EnableIfSelectedElementIsEdt;
             commandService.AddCommand(menuItem);
         }
 

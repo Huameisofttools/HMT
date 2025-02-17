@@ -1,5 +1,4 @@
 ﻿using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using System.Collections.Generic;
 
 namespace HMT.Kernel
 {

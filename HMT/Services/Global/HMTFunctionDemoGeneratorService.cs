@@ -18,7 +18,7 @@ using HMT.Kernel;
 using System.Xaml;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTFunctionDemoGenerator
+namespace HMT.Services.Global
 {
     public class HMTFunctionDemoGeneratorService
     {

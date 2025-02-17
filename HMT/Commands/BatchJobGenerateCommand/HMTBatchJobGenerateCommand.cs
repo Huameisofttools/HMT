@@ -2,14 +2,10 @@
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HMT.HMTBatchJobTemplateGenerator;
-using HMT.HMTFunctionDemoGenerator;
 using HMT.Kernel;
+using HMT.Views.Global;
+using HMT.Services.Global;
 
 namespace HMT.HMTCommands.HMTBatchJobGenerateCommand
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using HMT.Services.Global;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTTable.EnumCreator
+namespace HMT.Views.Global
 {
     public partial class EnumCreatorDialog : Form
     {

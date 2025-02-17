@@ -1,4 +1,4 @@
-﻿namespace HMT.HMTBatchJobTemplateGenerator
+﻿namespace HMT.Views.Global
 {
     partial class HMTBatchJobGenerateDialog
     {

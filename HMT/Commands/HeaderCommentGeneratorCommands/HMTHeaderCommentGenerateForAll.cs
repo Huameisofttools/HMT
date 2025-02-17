@@ -1,16 +1,13 @@
-﻿using EnvDTE;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
+﻿using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HMT.HMTHeaderCommandGenerator;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.ProjectSystem;
+using HMT.Views.Items.Commons;
+using HMT.Services.Global;
 
 namespace HMT.HMTCommands.HMTHeaderCommentGeneratorCommands
 {

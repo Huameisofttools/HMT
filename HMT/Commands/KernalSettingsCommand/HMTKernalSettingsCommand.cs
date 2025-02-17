@@ -2,13 +2,8 @@
 using System;
 using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
-using EnvDTE;
-using System.Collections.Generic;
-using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using HMT.KernelSettings;
 using HMT.Kernel;
+using HMT.Views.Settings;
 
 namespace HMT.HMTCommands.HMTKernalSettingsCommand
 {

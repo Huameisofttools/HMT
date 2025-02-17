@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTTable.TableBuilder
+﻿using HMT.Services.Items.Commons;
+
+namespace HMT.Views.Items.Commons
 {
     partial class TableBuilderDialog
     {
@@ -158,7 +160,7 @@
             // 
             // tableBuilderParmsBindingSource
             // 
-            this.tableBuilderParmsBindingSource.DataSource = typeof(HMT.HMTTable.TableBuilder.TableBuilderParms);
+            this.tableBuilderParmsBindingSource.DataSource = typeof(TableBuilderParms);
             // 
             // IsCreateTableCheckBox
             // 

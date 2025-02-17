@@ -1,4 +1,4 @@
-﻿namespace HMT.HMTHeaderCommandGenerator
+﻿namespace HMT.Views.Items.Commons
 {
     partial class HMTAddCommentDialog
     {

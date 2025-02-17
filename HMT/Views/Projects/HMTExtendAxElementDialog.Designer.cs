@@ -1,4 +1,4 @@
-﻿namespace HMT.HMTClass.HMTExtendAxElement
+﻿namespace HMT.Views.Projects
 {
     partial class HMTExtendAxElementDialog
     {

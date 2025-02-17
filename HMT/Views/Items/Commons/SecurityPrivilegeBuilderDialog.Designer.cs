@@ -1,5 +1,7 @@
 ﻿
-namespace HMT.HMTForm.PrivilegeBuilder
+using HMT.Services.Items.Commons;
+
+namespace HMT.Views.Items.Commons
 {
     partial class SecurityPrivilegeBuilderDialog
     {
@@ -84,7 +86,7 @@ namespace HMT.HMTForm.PrivilegeBuilder
             // 
             // securityPrivilegeBuilderParmsBindingSource
             // 
-            this.securityPrivilegeBuilderParmsBindingSource.DataSource = typeof(HMT.HMTForm.PrivilegeBuilder.SecurityPrivilegeBuilderParms);
+            this.securityPrivilegeBuilderParmsBindingSource.DataSource = typeof(SecurityPrivilegeBuilderParms);
             // 
             // PrivilegeNameTextBox
             // 

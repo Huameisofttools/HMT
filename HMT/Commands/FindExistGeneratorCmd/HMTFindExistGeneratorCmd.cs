@@ -3,16 +3,12 @@ using System;
 using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
 using EnvDTE;
-using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using EnvDTE80;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTTable.HMTFindExistMethodGenerator;
-using Microsoft.Dynamics.Framework.Tools.Core.Common;
-using Microsoft.VisualStudio.Shell.Interop;
+using HMT.Services.Items.Tables;
+using HMT.Views.Items.Tables;
 
 namespace HMT.HMTCommands.HMTFindExistGeneratorCmd
 {
@@ -88,14 +84,6 @@ namespace HMT.HMTCommands.HMTFindExistGeneratorCmd
                 }
                 ProjectItem projectItem2 = MyDte.SelectedItems.Item(1).ProjectItem;
                 IMetaElement item = LocalUtils.getNamedElementFromProjectItem(projectItem2);
-                //string axElType = item.GetType().Name;
-
-                //if (axElType != "AxTable")
-                //{
-                //    MessageBox.Show("Sorry! This function just execute for class element");
-                //    return;
-                //}
-
                 AxTable axTable = item as AxTable;
                 HMTFindExistMethodGenerateService service = new HMTFindExistMethodGenerateService(axTable);
                 HMTFindExistMethodGeneratorDialog dialog = new HMTFindExistMethodGeneratorDialog();

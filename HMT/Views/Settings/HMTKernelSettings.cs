@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HMT.KernelSettings;
+using HMT.Services.Settings;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.KernelSettings
+namespace HMT.Views.Settings
 {
     public partial class HMTKernelSettings : Form
     {

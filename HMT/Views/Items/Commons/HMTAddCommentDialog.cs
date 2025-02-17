@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTHeaderCommandGenerator
+namespace HMT.Views.Items.Commons
 {
     public partial class HMTAddCommentDialog : Form
     {

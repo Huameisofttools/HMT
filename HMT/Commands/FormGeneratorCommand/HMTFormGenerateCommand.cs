@@ -1,19 +1,13 @@
 ﻿using EnvDTE;
-using HMT.HMTBatchJobTemplateGenerator;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HMT.HMTFormGenerator;
-using EnvDTE80;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using Microsoft.VisualStudio.Shell.Interop;
+using HMT.Views.Items.Tables;
+using HMT.Services.Items.Tables;
 
 namespace HMT.HMTCommands.HMTFormGeneratorCommand
 {

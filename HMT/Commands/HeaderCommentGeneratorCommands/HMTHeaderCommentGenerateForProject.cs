@@ -1,5 +1,6 @@
-﻿using HMT.HMTHeaderCommandGenerator;
-using HMT.Kernel;
+﻿using HMT.Kernel;
+using HMT.Services.Global;
+using HMT.Views.Items.Commons;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using Microsoft.Dynamics.Framework.Tools.ProjectSystem;
@@ -7,7 +8,6 @@ using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Threading.Tasks;
 
 namespace HMT.HMTCommands.HMTHeaderCommentGeneratorCommands
 {

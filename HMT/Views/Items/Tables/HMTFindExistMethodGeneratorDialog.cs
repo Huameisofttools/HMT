@@ -1,5 +1,5 @@
-﻿using HMT.HMTAXEditorUtils.HMTParmMethodGenerator;
-using HMT.Kernel;
+﻿using HMT.Kernel;
+using HMT.Services.Items.Tables;
 using Microsoft.Dynamics.AX.Metadata.Core.Collections;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 //using System.Windows.Controls;
 using System.Windows.Forms;
 
-namespace HMT.HMTTable.HMTFindExistMethodGenerator
+namespace HMT.Views.Items.Tables
 {
     public partial class HMTFindExistMethodGeneratorDialog : Form
     {

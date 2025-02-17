@@ -1,4 +1,4 @@
-﻿namespace HMT.HMTTable.HMTFindExistMethodGenerator
+﻿namespace HMT.Views.Items.Tables
 {
     partial class HMTFindExistMethodGeneratorDialog
     {

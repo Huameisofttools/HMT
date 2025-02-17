@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 
 namespace HMT.Kernel
 {
     public class AutoControlSize
     {
-        private static Queue<Control> MyControlQuery_Init = new Queue<Control>();//初始化控件集合队列
-        private static ArrayList MyControlInfoList_Init = new ArrayList();//初始化控件参数集合
-        private static Int32 MainDlg_H_Init;//初始化主对话框参数
-        private static Int32 MainDlg_W_Init;//初始化主对话框参数
-        private static Int32 MainDlg_H_Curr;//当前主对话框参数
-        private static Int32 MainDlg_W_Curr;//当前主对话框参数
-        private struct ControlInfo//控件参数结构体
+        private static Queue<Control> MyControlQuery_Init = new Queue<Control>();
+        private static ArrayList MyControlInfoList_Init = new ArrayList();
+        private static Int32 MainDlg_H_Init;
+        private static Int32 MainDlg_W_Init;
+        private static Int32 MainDlg_H_Curr;
+        private static Int32 MainDlg_W_Curr;
+        private struct ControlInfo
         {
             public string ControlName;
             public Int32 Height;
@@ -26,7 +22,7 @@ namespace HMT.Kernel
             public Int32 Loc_X;
             public Int32 Loc_Y;
         }
-        private static void FormControlList(Control item)//递归遍历控件
+        private static void FormControlList(Control item)
         {
             for (int i = 0; i < item.Controls.Count; i++)
             {
@@ -44,22 +40,22 @@ namespace HMT.Kernel
                 MyControlQuery_Init.Enqueue(item.Controls[i]);
             }
         }
-        private static void GetMainFromSize_Init(Form MyForm)//获取初始化对话框参数
+        private static void GetMainFromSize_Init(Form MyForm)
         {
             MainDlg_H_Init = MyForm.Height;
             MainDlg_W_Init = MyForm.Width;
         }
-        private static void GetMainFromSize_Curr(Form MyForm)//获取当前对话框参数
+        private static void GetMainFromSize_Curr(Form MyForm)
         {
             MainDlg_H_Curr = MyForm.Height;
             MainDlg_W_Curr = MyForm.Width;
         }
-        public static void RegisterFormControl(Form MyForm)//注册对话框所以控件
+        public static void RegisterFormControl(Form MyForm)
         {
             FormControlList(MyForm);
             GetMainFromSize_Init(MyForm);
         }
-        public static void ChangeFormControlSize(Form MyForm)//使能AutoSize
+        public static void ChangeFormControlSize(Form MyForm)
         {
             GetMainFromSize_Curr(MyForm);
             Control myQuery;

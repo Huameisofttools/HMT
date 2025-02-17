@@ -24,7 +24,7 @@ using EnvDTE80;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Reports;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTLabelGenerator
+namespace HMT.Services.Global
 {
     abstract public class HMLabelService
     {

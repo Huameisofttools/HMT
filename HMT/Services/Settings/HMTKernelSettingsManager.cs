@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HMT.Kernel;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.KernelSettings
+namespace HMT.Services.Settings
 {
     public enum ExtensionTemplateDefaultScheme
     {
