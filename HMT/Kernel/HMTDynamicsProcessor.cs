@@ -7,12 +7,12 @@ namespace HMT.Kernel
 {
     internal class HMTDynamicsProcessor
     {
-        private List<ClassDC> classList;
+        //private List<ClassDC> classList;
 
-        public List<ClassDC> getStructure()
-        {
-            return this.classList;
-        }
+        //public List<ClassDC> getStructure()
+        //{
+        //    return this.classList;
+        //}
 
         public void processClassXml(string _path)
         {

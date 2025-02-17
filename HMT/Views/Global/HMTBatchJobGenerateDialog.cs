@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTBatchJobTemplateGenerator
+namespace HMT.Views.Global
 {
     public partial class HMTBatchJobGenerateDialog : Form
     {

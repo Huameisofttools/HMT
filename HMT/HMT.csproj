@@ -59,6 +59,7 @@
     <Compile Include="Commands\UserFeedbackCommands\HMTUserIssueFeedbackCommand.cs" />
     <Compile Include="Commands\UserFeedbackCommands\HMTUserSuggestCommand.cs" />
     <Compile Include="Commands\UserGuideCommands\HMTUserGuideCommand.cs" />
+    <Compile Include="KernelSettings\HMTKernelSettings.cs" />
     <Compile Include="Kernel\AutoControlSize.cs" />
     <Compile Include="Kernel\ClassDC.cs" />
     <Compile Include="Kernel\CreateXppItem.cs" />

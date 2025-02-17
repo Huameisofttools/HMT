@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HMT.HMTForm.MenuItemBuilder
+namespace HMT.Services.Items.Commons
 {
     public class MenuItemBuilderParms
     {

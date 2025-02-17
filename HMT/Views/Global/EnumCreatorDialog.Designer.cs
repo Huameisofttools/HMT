@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTTable.EnumCreator
+﻿using HMT.Services.Global;
+
+namespace HMT.Views.Global
 {
     partial class EnumCreatorDialog
     {
@@ -72,7 +74,7 @@
             // 
             // enumCreatorParmsBindingSource
             // 
-            this.enumCreatorParmsBindingSource.DataSource = typeof(HMTTable.EnumCreator.EnumCreatorParms);
+            this.enumCreatorParmsBindingSource.DataSource = typeof(EnumCreatorParms);
             // 
             // SeparatorTextBox
             // 

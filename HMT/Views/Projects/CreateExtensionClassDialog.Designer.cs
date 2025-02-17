@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTClass.CreateExtensionClass
+﻿using HMT.Services.Projects;
+
+namespace HMT.Views.Projects
 {
     partial class CreateExtensionClassDialog
     {
@@ -60,7 +62,7 @@
             // 
             // createExtensionClassParmsBindingSource
             // 
-            this.createExtensionClassParmsBindingSource.DataSource = typeof(HMT.HMTClass.CreateExtensionClass.CreateExtensionClassParms);
+            this.createExtensionClassParmsBindingSource.DataSource = typeof(CreateExtensionClassParms);
             // 
             // label1
             // 

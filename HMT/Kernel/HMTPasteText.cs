@@ -1,8 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Forms;
 using EnvDTE;
-using EnvDTE80;
 using Microsoft.Dynamics.AX.Metadata.Core.Collections;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
 using Microsoft.VisualStudio.Shell;
@@ -17,7 +15,7 @@ namespace HMT.Kernel
         private Find findPoint;
         private string parmMethod;
         private ListBox.SelectedObjectCollection selectedItems;
-        private object obj;
+        //private object obj;
 
         public HMTPasteText(EnvDTE80.DTE2 _dte, string _method)
         {
@@ -44,7 +42,6 @@ namespace HMT.Kernel
         public HMTPasteText(EnvDTE80.DTE2 _dte, string parmMethod, object _AxElement, ListBox.SelectedObjectCollection selectedItems)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            this.dte = this.dte;
             this.parmMethod = parmMethod;
             this.selectedItems = selectedItems;
             this.dte = _dte;

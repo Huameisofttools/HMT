@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
-using HMT.Kernel;
 using Microsoft.VisualStudio.Shell;
 
 namespace HMT.Commands.UserGuideCommands

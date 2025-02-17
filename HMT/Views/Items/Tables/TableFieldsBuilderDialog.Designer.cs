@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTTable.TableFieldsBuilder
+﻿using HMT.Services.Items.Tables;
+
+namespace HMT.Views.Items.Tables
 {
     partial class TableFieldsBuilderDialog
     {
@@ -101,7 +103,7 @@
             // 
             // tableFieldsBuilderParmsBindingSource
             // 
-            this.tableFieldsBuilderParmsBindingSource.DataSource = typeof(HMT.HMTTable.TableFieldsBuilder.TableFieldsBuilderParms);
+            this.tableFieldsBuilderParmsBindingSource.DataSource = typeof(TableFieldsBuilderParms);
             // 
             // FieldsTextBox
             // 

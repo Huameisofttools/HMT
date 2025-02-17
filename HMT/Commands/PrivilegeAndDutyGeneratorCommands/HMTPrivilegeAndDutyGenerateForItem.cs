@@ -1,18 +1,13 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.ComponentModel.Design;
-using Task = System.Threading.Tasks.Task;
 using EnvDTE;
-using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using EnvDTE80;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTAXEditorUtils.HMTParmMethodGenerator;
-using HMT.HMTForm.PrivilegeBuilder;
-using Microsoft.VisualStudio.Shell.Interop;
+using HMT.Views.Items.Commons;
+using HMT.Services.Items.Commons;
 
 namespace HMT.HMTCommands.HMTPrivilegeAndDutyGeneratorCommands
 {

@@ -6,10 +6,9 @@ using EnvDTE;
 using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Windows.Forms;
-using HMT.HMTLabelGenerator;
 using HMT.Kernel;
 using HMT.OptionsPane;
+using HMT.Services.Global;
 
 namespace HMT.HMTCommands.HMTLabelGenerateCommands
 {

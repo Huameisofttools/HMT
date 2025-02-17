@@ -1,6 +1,6 @@
 ﻿using EnvDTE;
-using HMT.HMTBatchJobTemplateGenerator;
 using HMT.Kernel;
+using HMT.Services.Global;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
 using Microsoft.Dynamics.AX.Metadata.Service;
 using Microsoft.Dynamics.Framework.Tools.Core;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HMT.HMTTable.HMTFindExistMethodGenerator
+namespace HMT.Services.Items.Tables
 {
     public class HMTFindExistMethodGenerateService
     {

@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTForm.MenuItemBuilder
+﻿using HMT.Services.Items.Commons;
+
+namespace HMT.Views.Items.Commons
 {
     partial class MenuItemBuilderDialog
     {
@@ -92,7 +94,7 @@
             // 
             // menuItemBuilderParmsBindingSource
             // 
-            this.menuItemBuilderParmsBindingSource.DataSource = typeof(HMTForm.MenuItemBuilder.MenuItemBuilderParms);
+            this.menuItemBuilderParmsBindingSource.DataSource = typeof(MenuItemBuilderParms);
             // 
             // FormHelpTextBox
             // 

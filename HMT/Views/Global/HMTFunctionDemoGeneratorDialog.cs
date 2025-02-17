@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTFunctionDemoGenerator
+namespace HMT.Views.Global
 {
     public partial class HMTFunctionDemoGeneratorDialog : Form
     {

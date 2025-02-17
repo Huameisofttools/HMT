@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace HMT.HMTTable.TableBuilder
+namespace HMT.Services.Items.Commons
 {
     public class TableBuilderParms
     {

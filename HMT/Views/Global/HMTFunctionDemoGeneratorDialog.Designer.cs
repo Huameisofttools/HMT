@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using HMT.Services.Global;
+using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTFunctionDemoGenerator
+namespace HMT.Views.Global
 {
     partial class HMTFunctionDemoGeneratorDialog
     {

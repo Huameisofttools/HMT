@@ -26,7 +26,7 @@ using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Maps;
 using HMT.Kernel;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTHeaderCommandGenerator
+namespace HMT.Services.Global
 {
     /// <summary>
     /// HM_D365_Addin_HeaderCommentGenerator

@@ -11,7 +11,7 @@ using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.DataEntityViews;
 using HMT.Kernel;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTForm.PrivilegeBuilder
+namespace HMT.Services.Items.Commons
 {
     public enum PrivilegeAccessLevel
     {

@@ -1,16 +1,10 @@
 ﻿using HMT.Kernel;
+using HMT.Services.Items.Commons;
 using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HMT.HMTTable.TableBuilder
+namespace HMT.Views.Items.Commons
 {
     public partial class TableBuilderDialog : Form
     {

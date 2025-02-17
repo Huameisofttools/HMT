@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTFormGenerator
+﻿using HMT.Services.Items.Tables;
+
+namespace HMT.Views.Items.Tables
 {
     partial class HMTFormBuilderDialog
     {
@@ -133,7 +135,7 @@
             // 
             // formBuilderParmsBindingSource
             // 
-            this.formBuilderParmsBindingSource.DataSource = typeof(HMT.HMTFormGenerator.HMTFormService);
+            this.formBuilderParmsBindingSource.DataSource = typeof(HMTFormService);
             // 
             // GridGroupNameTextBox1
             // 

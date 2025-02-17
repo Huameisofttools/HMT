@@ -10,8 +10,9 @@ using System.Windows.Forms;
 using EnvDTE80;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTTable.TableFieldsBuilder;
 using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
+using HMT.Views.Items.Tables;
+using HMT.Services.Items.Tables;
 
 namespace HMT.HMTCommands.TableFieldsBuilderCommands
 {

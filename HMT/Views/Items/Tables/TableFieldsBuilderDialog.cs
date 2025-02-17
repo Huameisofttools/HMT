@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.VisualStudio.Shell;
+using HMT.Services.Items.Tables;
 
-namespace HMT.HMTTable.TableFieldsBuilder
+namespace HMT.Views.Items.Tables
 {
     public partial class TableFieldsBuilderDialog : Form
     {

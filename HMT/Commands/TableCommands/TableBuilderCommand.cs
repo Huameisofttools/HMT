@@ -6,9 +6,10 @@ using System.ComponentModel.Design;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTTable.TableBuilder;
 using System.Windows.Forms;
 using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
+using HMT.Views.Items.Commons;
+using HMT.Services.Items.Commons;
 
 namespace HMT.HMTCommands.TableCommands
 {

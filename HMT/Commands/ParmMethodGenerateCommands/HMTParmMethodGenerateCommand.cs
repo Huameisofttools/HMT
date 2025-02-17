@@ -4,7 +4,8 @@ using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTAXEditorUtils.HMTParmMethodGenerator;
+using HMT.Services.Editors;
+using HMT.Views.Editors;
 
 namespace HMT.HMTCommands.HMTParmMethodGenerateCommands
 {

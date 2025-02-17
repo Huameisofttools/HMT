@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HMT.HMTForm.FormBuilder
+namespace HMT.Services.Items.Forms
 {
     public enum FormTemplateType
     {

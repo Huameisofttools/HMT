@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 using HMT.Models;
 using System.Windows.Controls;
+using static Microsoft.VisualStudio.Threading.AsyncReaderWriterLock;
 
 namespace HMT
 {
@@ -102,6 +103,7 @@ namespace HMT
         /// <returns></returns>
         protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
         {
+            await JoinableTaskFactory.SwitchToMainThreadAsync();
             var dte = await this.GetServiceAsync(typeof(EnvDTE.DTE)) as DTE2;
             return new HMTJsonToDataContractToolWindowData
             {

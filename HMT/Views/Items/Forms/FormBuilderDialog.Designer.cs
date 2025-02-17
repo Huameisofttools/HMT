@@ -1,4 +1,6 @@
-﻿namespace HMT.HMTForm.FormBuilder
+﻿using HMT.Services.Items.Forms;
+
+namespace HMT.Views.Items.Forms
 {
     partial class FormBuilderDialog
     {
@@ -133,7 +135,7 @@
             // 
             // formBuilderParmsBindingSource
             // 
-            this.formBuilderParmsBindingSource.DataSource = typeof(HMTForm.FormBuilder.FormBuilderParms);
+            this.formBuilderParmsBindingSource.DataSource = typeof(FormBuilderParms);
             // 
             // GridGroupNameTextBox1
             // 

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using EnvDTE;
-using EnvDTE80;
 
 namespace HMT.Kernel
 {

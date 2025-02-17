@@ -1,4 +1,4 @@
-﻿namespace HMT.KernelSettings
+﻿namespace HMT.Views.Settings
 {
     public partial class HMTKernelSettings
     {

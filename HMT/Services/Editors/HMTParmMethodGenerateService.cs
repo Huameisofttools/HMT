@@ -4,7 +4,7 @@ using HMT.Kernel;
 using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
+namespace HMT.Services.Editors
 {
     public class HMTParmMethodGenerateService : HMTTemplate
     {

@@ -1,16 +1,14 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.ComponentModel.Design;
-using Task = System.Threading.Tasks.Task;
 using EnvDTE;
-using System.Collections.Generic;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using HMT.Kernel;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using HMT.HMTLabelGenerator;
 using HMT.OptionsPane;
 using System.Text.RegularExpressions;
+using HMT.Services.Global;
 
 namespace HMT.HMTCommands.HMTLabelGenerateCommands
 {

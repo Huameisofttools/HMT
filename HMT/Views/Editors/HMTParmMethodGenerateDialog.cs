@@ -7,8 +7,9 @@ using System.Windows.Forms;
 using HMT.Kernel;
 using Microsoft.VisualStudio.Shell;
 using EnvDTE80;
+using HMT.Services.Editors;
 
-namespace HMT.HMTAXEditorUtils.HMTParmMethodGenerator
+namespace HMT.Views.Editors
 {
     public partial class HMTParmMethodGenerateDialog : Form
     {

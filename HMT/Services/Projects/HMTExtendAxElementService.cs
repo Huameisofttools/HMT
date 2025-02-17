@@ -1,19 +1,12 @@
-﻿using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Forms;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation;
-using System;
+﻿using System;
 using System.Text;
 using HMT.Kernel;
-using HMT.KernelSettings;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Classes;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Tables;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.DataEntityViews;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Views;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Maps;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
 using Microsoft.VisualStudio.Shell;
+using HMT.Services.Settings;
 
-namespace HMT.HMTClass.HMTExtendAxElement
+namespace HMT.Services.Projects
 {
     public class HMTExtendAxElementService
     {

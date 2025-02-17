@@ -25,7 +25,7 @@ using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Reports;
 using Microsoft.Dynamics.Framework.Tools.ProjectSupport;
 using Microsoft.VisualStudio.Shell;
 
-namespace HMT.HMTLabelGenerator
+namespace HMT.Services.Global
 {
     abstract public class HMTLabelService
     {

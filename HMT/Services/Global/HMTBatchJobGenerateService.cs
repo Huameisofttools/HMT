@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 
-namespace HMT.HMTBatchJobTemplateGenerator
+namespace HMT.Services.Global
 {
     public class HMTBatchJobGenerateService
     {
