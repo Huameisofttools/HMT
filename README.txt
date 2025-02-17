@@ -1,1 +1,0 @@
-This is a dynamics 365 finance and operation development tool.
