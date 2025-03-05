@@ -79,6 +79,12 @@ namespace HMT
             await HMTUserIssueFeedbackCommand.InitializeAsync(this);
             await HMTUserSuggestCommand.InitializeAsync(this);
             await HMTUserGuideCommand.InitializeAsync(this);
+
+            // Ina Wang on 03/05/2025
+            // Initialize the HMTImportOptionsCmds and HMTExportOptionsCommands
+            await HMTCommands.HMTImportOptionsCmds.HMTImportOptionsCmds.InitializeAsync(this);
+            await HMTCommands.HMTExportOptionsCommands.HMTExportOptionsCommands.InitializeAsync(this);
+            // end Ina Wang on 03/05/2025
             await Commands.WindowCommands.HMTJsonToDataContractWindowCommand.InitializeAsync(this);
         }
 

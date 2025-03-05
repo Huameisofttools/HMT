@@ -33,8 +33,8 @@
 		<Parent guid="guidHMTPackageMenuSet" id="HMTEditorMenu" />
 	  </Group>
     </Groups>
-	  
-	<Menus>		
+
+	  <Menus>		
 	  <Menu guid="guidHMTPackageMenuSet" id="HMTMenu" priority="0x0102">
 	    <Parent guid="guidHMTPackageGroupSet" id="HMTGroup" />		  
 		<Strings>
@@ -199,6 +199,20 @@
 		  <ButtonText>User guide</ButtonText>
 		</Strings>
 	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTExportOptionsCommands" priority="0x0144" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidGuideIcon" id="HMGuideReport" />
+		<Strings>
+		  <ButtonText>Export options</ButtonText>
+		</Strings>
+	  </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTImportOptionsCmds" priority="0x0143" type="Button">
+		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidGuideIcon" id="HMGuideReport" />
+		<Strings>
+		  <ButtonText>Import options</ButtonText>
+		</Strings>
+	  </Button>
       <Button guid="guidHMTPackageCmdSet" id="cmdidHMTJsonToDataContractWindowCommand" priority="0x0139" type="Button">
         <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
 		  <Icon guid="guidImages" id="HMLOGO" />
@@ -237,6 +251,8 @@
 	  <IDSymbol name="HMTUserIssueFeedbackCommand" value="0x0131" />
 	  <IDSymbol name="HMTUserSuggestCommand" value="0x0133" />
 	  <IDSymbol name="HMTUserGuideCommand" value="0x0135" />
+	  <IDSymbol name="HMTExportOptionsCommands" value="0x0144" />
+	  <IDSymbol name="HMTImportOptionsCmds" value="0x0143" />
 	  <IDSymbol name="HMTPasteLabelInDocCommand" value="0x0137" />
       <IDSymbol name="cmdidHMTJsonToDataContractWindowCommand" value="0x0139" />
     </GuidSymbol>
