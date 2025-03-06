@@ -3,10 +3,13 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-// Ina Wang on 03/05/2025
-// This class is used to upload XML file
+
 namespace HMT.Views.Global
 {
+    /// <summary>
+    /// ina wang on 03/05/2025
+    /// this class is used to upload XML file
+    /// </summary>
     public partial class HMTXMLFileUploadWinForm : Form
     {
         public string UploadedXmlContent { get; private set; }
@@ -16,42 +19,54 @@ namespace HMT.Views.Global
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Ina Wang on 03/05/2025
+        /// this method is used to select the XML file to upload, click the button to select the file
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void btnSelectFile_Click_1(object sender, EventArgs e)
         {
-            // create a OpenFileDialog 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            // set a file filter，only can upload XML file
-            openFileDialog.Filter = "XML 文件 (*.xml)|*.xml";
-
-            // show the OpenFileDialog
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                // get user selected file path
-                string filePath = openFileDialog.FileName;
-                txtFilePath.Text = filePath;
+                // Set a file filter to only allow XML files
+                openFileDialog.Filter = "XML Files (*.xml)|*.xml";
 
-                try
+                // Show the OpenFileDialog
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // read XML content from file
-                    string xmlContent = File.ReadAllText(filePath);
-                    rtbXmlContent.Text = xmlContent;
+                    // Get the user-selected file path
+                    string filePath = openFileDialog.FileName;
+                    txtFilePath.Text = filePath;
 
-                    // parse XML file
-                    XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.Load(filePath);
-                    UploadedXmlContent = File.ReadAllText(filePath);
-                    //this.DialogResult = DialogResult.OK;
-                    this.Close();
-                    MessageBox.Show("XML file upload successfully！", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    // 捕获并显示异常信息
-                    MessageBox.Show($"Throw an error when impot XML file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        // Read and display XML content from the file
+                        string xmlContent = File.ReadAllText(filePath);
+                        rtbXmlContent.Text = xmlContent;
+
+                        // Parse the XML file to ensure it is valid
+                        XmlDocument xmlDoc = new XmlDocument();
+                        xmlDoc.LoadXml(xmlContent);
+                        UploadedXmlContent = xmlContent;
+
+                        MessageBox.Show("XML file uploaded successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    catch (XmlException xmlEx)
+                    {
+                        // Capture and display XML-specific exception information
+                        MessageBox.Show($"Error parsing XML file: {xmlEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Capture and display general exception information
+                        MessageBox.Show($"Error uploading XML file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-
         }
+
     }
 }

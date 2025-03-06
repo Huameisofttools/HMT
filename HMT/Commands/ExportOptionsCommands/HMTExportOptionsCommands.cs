@@ -14,10 +14,13 @@ using System.Xml;
 using System.IO;
 using HMT.Views.Global;
 
-// Ina Wang on 03/05/2025
-// This class is responsible for handling the export options command
+
 namespace HMT.HMTCommands.HMTExportOptionsCommands
 {
+    /// <summary>
+    /// Ina Wang on 03/05/2025
+    /// This class is responsible for handling the export options command
+    /// </summary>
     internal sealed class HMTExportOptionsCommands
     {
         public const int CommandId = 0x0144;
@@ -34,55 +37,6 @@ namespace HMT.HMTCommands.HMTExportOptionsCommands
             var menuCommandID = new CommandID(CommandSet, CommandId);
             OleMenuCommand menuItem = new OleMenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
-        }
-
-        private void EnableIfSelectedElementIsEdt(object sender, EventArgs e)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            OleMenuCommand menuCommand = sender as OleMenuCommand;
-            bool flag = menuCommand != null;
-            if (flag)
-            {
-                bool isEnabled = this.checkOpened();
-                //menuCommand.Visible = CiellosTools.D365.CiellosUtils.getIsParmMethodActivated(this.package);
-                menuCommand.Enabled = isEnabled;
-            }
-        }
-
-        public bool checkOpened()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            bool ret = false;
-            EnvDTE80.DTE2 dte = this.ServiceProvider.GetService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
-            if (dte == null)
-            {
-                return false;
-            }
-            try
-            {
-                ProjectItem projectItem = dte.SelectedItems.Item(1).ProjectItem;
-                IMetaElement item = LocalUtils.getNamedElementFromProjectItem(projectItem);
-
-                // bool flag = dte.ActiveDocument != null;
-                if (item != null)
-                {
-                     
-                    if (item.GetType().Name == "AxTable"
-                    || item.GetType().Name == "AxView"
-                    || item.GetType().Name == "AxForm"
-                    || item.GetType().Name == "AxDataEntityView"
-                    || item.GetType().Name == "AxQuerySimple"
-                    || item.GetType().Name == "AxClass")
-                    {
-                        ret = true;
-                    }
-                }
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
         }
 
         public static HMTExportOptionsCommands Instance
@@ -107,6 +61,12 @@ namespace HMT.HMTCommands.HMTExportOptionsCommands
             Instance = new HMTExportOptionsCommands(package, commandService);
         }
 
+        /// <summary>
+        /// Ina Wang on 03/05/2025
+        /// This method is used to execute the export options command value to xml file
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void Execute(object sender, EventArgs e)
         {
             bool generateForCodeLabel   = false;
