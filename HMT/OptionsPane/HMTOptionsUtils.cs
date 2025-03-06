@@ -42,6 +42,14 @@ namespace HMT.OptionsPane
             return page.ExtensionClassPrefix;
         }
 
+        public static string getAIApiKey(AsyncPackage _package)
+        {
+            HMTCoplotOptions page = (HMTCoplotOptions)_package.GetDialogPage(typeof(HMTCoplotOptions));
+            page.LoadSettingsFromStorage();
+            
+            return page.Password;
+        }
+
         // added by Ina Wang on 03/05/2025
         // set the prefix value
         public static void setPrefix(AsyncPackage _package, string _inputPrefix)
