@@ -199,20 +199,20 @@
 		  <ButtonText>User guide</ButtonText>
 		</Strings>
 	  </Button>
-	  <Button guid="guidHMTPackageCmdSet" id="HMTExportOptionsCommands" priority="0x0144" type="Button">
-		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
-		<Icon guid="guidGuideIcon" id="HMGuideReport" />
-		<Strings>
-		  <ButtonText>Export options</ButtonText>
-		</Strings>
-	  </Button>
 	  <Button guid="guidHMTPackageCmdSet" id="HMTImportOptionsCmds" priority="0x0143" type="Button">
-		<Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
-		<Icon guid="guidGuideIcon" id="HMGuideReport" />
-		<Strings>
-		  <ButtonText>Import options</ButtonText>
-		</Strings>
-	  </Button>
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Import options</ButtonText>
+        </Strings>
+      </Button>
+	  <Button guid="guidHMTPackageCmdSet" id="HMTExportOptionsCommands" priority="0x0144" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		<Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Export options</ButtonText>
+        </Strings>
+      </Button>
       <Button guid="guidHMTPackageCmdSet" id="cmdidHMTJsonToDataContractWindowCommand" priority="0x0139" type="Button">
         <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
 		  <Icon guid="guidImages" id="HMLOGO" />
