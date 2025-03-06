@@ -56,6 +56,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\ExportOptionsCommands\HMTExportOptionsCommands.cs" />
+    <Compile Include="Commands\ImportOptionsCommands\HMTImportOptionsCmds.cs" />
     <Compile Include="Commands\UserFeedbackCommands\HMTUserIssueFeedbackCommand.cs" />
     <Compile Include="Commands\UserFeedbackCommands\HMTUserSuggestCommand.cs" />
     <Compile Include="Commands\UserGuideCommands\HMTUserGuideCommand.cs" />
@@ -87,6 +89,18 @@
     <Compile Include="Commands\WindowCommands\HMTJsonToDataContractWindowCommand.cs" />
     <Compile Include="Views\Global\HMTJsonToDataContractWindowControl.xaml.cs">
       <DependentUpon>HMTJsonToDataContractWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Global\HMTXMLFileDownloadWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Global\HMTXMLFileDownloadWinForm.Designer.cs">
+      <DependentUpon>HMTXMLFileDownloadWinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Global\HMTXMLFileUploadWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Global\HMTXMLFileUploadWinForm.Designer.cs">
+      <DependentUpon>HMTXMLFileUploadWinForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Projects\CreateExtensionClassDialog.cs">
       <SubType>Form</SubType>
@@ -259,6 +273,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Editors\HMTParmMethodGenerateDialog.resx">
       <DependentUpon>HMTParmMethodGenerateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Global\HMTXMLFileDownloadWinForm.resx">
+      <DependentUpon>HMTXMLFileDownloadWinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Global\HMTXMLFileUploadWinForm.resx">
+      <DependentUpon>HMTXMLFileUploadWinForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Projects\CreateExtensionClassDialog.resx">
       <DependentUpon>CreateExtensionClassDialog.cs</DependentUpon>

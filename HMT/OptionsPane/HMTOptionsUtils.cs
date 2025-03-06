@@ -41,5 +41,29 @@ namespace HMT.OptionsPane
             HMTOptions page = (HMTOptions)_package.GetDialogPage(typeof(HMTOptions));
             return page.ExtensionClassPrefix;
         }
+
+        // added by Ina Wang on 03/05/2025
+        // set the prefix value
+        public static void setPrefix(AsyncPackage _package, string _inputPrefix)
+        {
+            HMTOptions page = (HMTOptions)_package.GetDialogPage(typeof(HMTOptions));
+            page.ExtensionClassPrefix = _inputPrefix;
+        }
+
+        // added by Ina Wang on 03/05/2025
+        // set the label for source code value
+        public static void setIsLabelForSourceCode(AsyncPackage _package, bool _inputIsLabelForSourceCode)
+        {
+            HMTOptions page = (HMTOptions)_package.GetDialogPage(typeof(HMTOptions));
+            page.SetLabelForSourceCode = _inputIsLabelForSourceCode;
+        }
+
+        // added by Ina Wang on 03/05/2025
+        // set the method active value
+        public static void setIsParmMethodActivated(AsyncPackage _package, bool _inputIsParmMethodActivated)
+        {
+            HMTOptions page = (HMTOptions)_package.GetDialogPage(typeof(HMTOptions));
+            page.parmtMethod = _inputIsParmMethodActivated;
+        }
     }
 }
