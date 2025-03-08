@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 using HMT.Models;
 using System.Windows.Controls;
-using static Microsoft.VisualStudio.Threading.AsyncReaderWriterLock;
 
 namespace HMT
 {
@@ -40,9 +39,9 @@ namespace HMT
     [Guid("4ab38674-8342-44af-9ef8-fdaf145c8972")]    
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(HMTOptions), "HMT D365FFO tools", "D365FFO Page", 0, 0, true)]
-    [ProvideOptionPage(typeof(HMTCoplotOptions), "HMT D365FFO tools", "Huamei Copilot Setting", 0, 0, true)]
+    [ProvideOptionPage(typeof(GeneralOptionPage), "HMT D365FFO tools", "General", 0, 0, true)]
+    [ProvideProfile(typeof(GeneralOptionPage), "HMT D365FFO tools", "General", 0, 0, true)]
     [ProvideToolWindow(typeof(HMT.Views.Global.HMTJsonToDataContractWindow))]
-    [ProvideToolWindow(typeof(HMT.Views.Settings.HMTCopilotOptionPage))]
     public sealed class HMTPackage : AsyncPackage
     {
         /// <summary>
@@ -71,7 +70,6 @@ namespace HMT
             await HMTCommands.HMTFormGeneratorCommand.HMTFormGenerateCommand.InitializeAsync(this);
             await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForItem.InitializeAsync(this);
             await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForProject.InitializeAsync(this);
-            // await HMTCommands.HMTHeaderCommentGeneratorCommands.HMTHeaderCommentGenerateForAll.InitializeAsync(this); This function abandoned
             await HMTCommands.HMTParmMethodGenerateCommands.HMTParmMethodGenerateCommand.InitializeAsync(this);
             await HMTCommands.HMTFindExistGeneratorCmd.HMTFindExistGeneratorCmd.InitializeAsync(this);
             await HMTCommands.HMTExtendAxElementCmd.HMTExtendAxElementCmd.InitializeAsync(this);
@@ -88,7 +86,6 @@ namespace HMT
             await HMTCommands.HMTExportOptionsCommands.HMTExportOptionsCommands.InitializeAsync(this);
             // end Ina Wang on 03/05/2025
             await Commands.WindowCommands.HMTJsonToDataContractWindowCommand.InitializeAsync(this);
-            await HMT.Views.Settings.HMTCopilotOptionPageCommand.InitializeAsync(this);
         }
 
         /// <summary>

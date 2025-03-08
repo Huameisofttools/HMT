@@ -70,10 +70,12 @@
     <Compile Include="Kernel\HMTTemplate.cs" />
     <Compile Include="Kernel\HMTUtils.cs" />
     <Compile Include="Kernel\IStrategy.cs" />
+    <Compile Include="Kernel\SecureStringHelper.cs" />
     <Compile Include="Models\HMTJsonToDataContractToolWindowData.cs" />
-    <Compile Include="OptionsPane\HMTCoplotOptions.cs">
+    <Compile Include="OptionsPane\GeneralOptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="OptionsPane\HMTOptionsProvider.cs" />
     <Compile Include="Views\Editors\HMTParmMethodGenerateDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,8 +214,9 @@
       <DependentUpon>TableFieldsBuilderDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Items\Tables\TableFieldsBuilderParms.cs" />
-    <Compile Include="Views\Settings\HMTCopilotOptionPage.cs" />
-    <Compile Include="Views\Settings\HMTCopilotOptionPageCommand.cs" />
+    <Compile Include="Views\Settings\GeneralOptions.xaml.cs">
+      <DependentUpon>GeneralOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\HMTCopilotOptionPageControl.xaml.cs">
       <DependentUpon>HMTCopilotOptionPageControl.xaml</DependentUpon>
     </Compile>
@@ -385,6 +388,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Community.VisualStudio.Toolkit.17">
+      <Version>17.0.533</Version>
+    </PackageReference>
     <PackageReference Include="MessagePack">
       <Version>3.1.1</Version>
     </PackageReference>
@@ -397,6 +403,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Global\HMTJsonToDataContractWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\GeneralOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
