@@ -234,7 +234,6 @@
 	  <Bitmap guid="guidBugIcon" href="Resources\Icon\bug-report.png" usedList="HMBugReport" />
 	  <Bitmap guid="guidSuggestIcon" href="Resources\Icon\release.png" usedList="HMSuggestReport" />
 	  <Bitmap guid="guidGuideIcon" href="Resources\Icon\file-fill.png" usedList="HMGuideReport" />
-      <Bitmap guid="guidImages1" href="Views\Settings\Resources\HMTCopilotOptionPageCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>	  
   </Commands>
 
