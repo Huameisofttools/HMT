@@ -34,13 +34,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3B334F1-E70E-46E7-BC6E-CC942F824215}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://dev.azure.com/huameitech
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = HMT\\HMT.csproj
-		SccProjectName1 = HMT
-		SccLocalPath1 = HMT
-	EndGlobalSection
 EndGlobal
