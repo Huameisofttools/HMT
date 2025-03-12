@@ -15,10 +15,6 @@ namespace HMT.Views.Global
     /// </summary>
     public partial class HAiMainChatWindowControl : UserControl
     {
-        // private DispatcherTimer typingTimer;
-        private string currentTypingMessage;
-        private int typingIndex;
-        private StackPanel currentMessagePanel;
         private List<dynamic> messages;
 
         /// <summary>
