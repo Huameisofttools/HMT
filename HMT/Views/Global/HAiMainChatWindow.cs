@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.Runtime.InteropServices;
+using HMT.Views.Global;
 
 namespace HMT.Views.Global
 {

@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace suiren
+namespace HMT.Views.Global
 {
     /// <summary>
     /// Interaction logic for HAiMainChatWindowControl.
