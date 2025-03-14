@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 using HMT.Models;
 using System.Windows.Controls;
+using HMT.Views.Global;
 
 namespace HMT
 {
@@ -41,7 +42,8 @@ namespace HMT
     [ProvideOptionPage(typeof(HMTOptions), "HMT D365FFO tools", "D365FFO Page", 0, 0, true)]
     [ProvideOptionPage(typeof(GeneralOptionPage), "HMT D365FFO tools", "General", 0, 0, true)]
     [ProvideProfile(typeof(GeneralOptionPage), "HMT D365FFO tools", "General", 0, 0, true)]
-    [ProvideToolWindow(typeof(HMT.Views.Global.HMTJsonToDataContractWindow))]
+    [ProvideToolWindow(typeof(HMTJsonToDataContractWindow))]
+    [ProvideToolWindow(typeof(HAiMainChatWindow))]
     public sealed class HMTPackage : AsyncPackage
     {
         /// <summary>
@@ -86,6 +88,7 @@ namespace HMT
             await HMTCommands.HMTExportOptionsCommands.HMTExportOptionsCommands.InitializeAsync(this);
             // end Ina Wang on 03/05/2025
             await Commands.WindowCommands.HMTJsonToDataContractWindowCommand.InitializeAsync(this);
+            await Commands.WindowCommands.HAiMainChatWindowCommand.InitializeAsync(this);
         }
 
         /// <summary>

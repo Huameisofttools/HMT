@@ -4,22 +4,87 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"             
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml" xmlns:local="clr-namespace:HMT.Views.Global"
+             Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             Name="MyToolWindow">
+             x:Name="MyToolWindow"
+             VirtualizingStackPanel.IsVirtualizing="True">
+    <UserControl.Resources>
+        <local:HMTBackgroundConverter x:Key="BackgroundConverter" />
+        <local:HMTAlignmentConverter x:Key="AlignmentConverter" />
+        <local:HMTForegroundConverter x:Key="ForegroundConverter" />
+
+        <Style x:Key="TimestampStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+
+        <Style x:Key="SendButtonStyle" TargetType="Button">            
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Name="scrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="0" Margin="10">
-            <StackPanel Name="chatPanel" Width="600" />
+
+        <ScrollViewer Grid.Row="0" x:Name="MessagesScrollViewer" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Messages}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Message bubble -->
+                            <Border Background="{Binding IsUser, Converter={StaticResource BackgroundConverter}}"
+                                    CornerRadius="10"
+                                    Padding="10"
+                                    MaxWidth="400"
+                                    HorizontalAlignment="{Binding IsUser, Converter={StaticResource AlignmentConverter}}">
+                                <TextBlock Text="{Binding Content}"
+                                           TextWrapping="Wrap"
+                                           Foreground="{Binding IsUser, Converter={StaticResource ForegroundConverter}}"/>
+                            </Border>                            
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
-        <TextBox Name="inputBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Width="660" Height="100" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-            <!--<TextBox Name="inputBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Width="660" Height="100" VerticalAlignment="Center"/>-->
-            <Button Name="sendBtn" Content="Send" Width="100" Height="40" Click="button1_Click"/>
-        </StackPanel>
+        
+        <!-- Input area -->
+        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#EEE">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="InputBox"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
+                         KeyDown="InputBox_KeyDown">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SendCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <Button Grid.Column="1"
+                        Content="Send"
+                        Command="{Binding SendCommand}"
+                        Style="{StaticResource SendButtonStyle}"
+                        Margin="5,0,0,0"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
