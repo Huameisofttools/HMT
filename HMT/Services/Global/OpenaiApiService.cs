@@ -14,7 +14,7 @@ namespace suiren.Services
             _restClient = restClient;
         }
 
-        public async Task<DskApiResponse> GetDskDataAsync(string parameters)
+        public async Task<RestResponse> GetDskDataAsync(string parameters)
         {
             RestRequest request = new RestRequest("https://api.deepseek.com/chat/completions", Method.Post);
             request.AddHeader("Content-Type", "application/json");
@@ -22,7 +22,7 @@ namespace suiren.Services
             request.AddHeader("Authorization", "Bearer sk-613975d20507407399cb67b54a313504");
             request.AddStringBody(parameters, RestSharp.DataFormat.Json);
             RestResponse response = await _restClient.ExecuteAsync(request).ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<DskApiResponse>(response.Content);            
+            return response;    
         }
     }
 }

@@ -18,12 +18,12 @@ namespace HMT.Commands.WindowCommands
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 0x0141;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("1b70c16e-2a2f-4e71-80e7-def3e6ea985d");
+        public static readonly Guid CommandSet = new Guid("194ef7a6-070b-47e5-b084-193c13aa350a");
 
         /// <summary>
         /// VS Package that provides this command, not null.

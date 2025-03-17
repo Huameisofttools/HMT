@@ -220,11 +220,11 @@
           <ButtonText>Json to Data Contract</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidHMTPackageCmdSet" id="cmdidHMTCopilotOptionPageCommand" priority="0x0100" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
-        <Icon guid="guidImages1" id="bmpPic1" />
+	  <Button guid="guidHMTPackageCmdSet" id="HAiMainChatWindowCommand" priority="0x0141" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+		  <Icon guid="guidImages" id="HMLOGO" />
         <Strings>
-          <ButtonText>HMTCopilotOptionPage</ButtonText>
+          <ButtonText>Huamei Copilot Chat</ButtonText>
         </Strings>
       </Button>
     </Buttons> 
@@ -262,7 +262,7 @@
 	  <IDSymbol name="HMTImportOptionsCmds" value="0x0143" />
 	  <IDSymbol name="HMTPasteLabelInDocCommand" value="0x0137" />
       <IDSymbol name="cmdidHMTJsonToDataContractWindowCommand" value="0x0139" />
-      <IDSymbol value="4625" name="cmdidHMTCopilotOptionPageCommand" />
+	  <IDSymbol name="HAiMainChatWindowCommand" value="0x0141" />
     </GuidSymbol>
 
 	<GuidSymbol name="guidHMTPackageMenuSet" value="{1041a140-1cb6-44a5-9704-25bd0f8508ca}">
