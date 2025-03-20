@@ -4,25 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml" xmlns:local="clr-namespace:HMT.Views.Global"
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml" 
+             xmlns:local="clr-namespace:HMT.Views.Global"
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             x:Name="MyToolWindow"
-             VirtualizingStackPanel.IsVirtualizing="True">
+             Name="MyToolWindow">
     <UserControl.Resources>
         <local:HMTBackgroundConverter x:Key="BackgroundConverter" />
         <local:HMTAlignmentConverter x:Key="AlignmentConverter" />
         <local:HMTForegroundConverter x:Key="ForegroundConverter" />
+        <local:HMTPercentageConverter x:Key="PercentageConverter" />
 
-        <Style x:Key="TimestampStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Gray" />
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Margin" Value="5,0,0,0" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-        </Style>
-
-        <Style x:Key="SendButtonStyle" TargetType="Button">            
+        <Style x:Key="SendButtonStyle" TargetType="Button">
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
@@ -35,7 +29,12 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" x:Name="MessagesScrollViewer" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Messages}">
+            <ItemsControl ItemsSource="{Binding Messages}" HorizontalAlignment="Stretch">
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,5">
@@ -48,11 +47,15 @@
                             <Border Background="{Binding IsUser, Converter={StaticResource BackgroundConverter}}"
                                     CornerRadius="10"
                                     Padding="10"
-                                    MaxWidth="400"
+                                    MaxWidth="{Binding ActualWidth, ElementName=MessagesScrollViewer, Converter={StaticResource PercentageConverter}, ConverterParameter=0.85}"
                                     HorizontalAlignment="{Binding IsUser, Converter={StaticResource AlignmentConverter}}">
-                                <TextBlock Text="{Binding Content}"
-                                           TextWrapping="Wrap"
-                                           Foreground="{Binding IsUser, Converter={StaticResource ForegroundConverter}}"/>
+                                <mdxam:MarkdownScrollViewer 
+                                    MarkdownStyle="{Binding SelectedStyleInfo.Style}"
+                                    VerticalScrollBarVisibility="Hidden"
+                                    xml:space="preserve" 
+                                    Markdown="{Binding Content}" 
+                                    Foreground="{Binding IsUser, Converter={StaticResource ForegroundConverter}}" 
+                                    HorizontalAlignment="Stretch" />
                             </Border>                            
                         </Grid>
                     </DataTemplate>
@@ -69,9 +72,12 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="InputBox"
+                         MaxHeight="100"
+                         VerticalAlignment="Top"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Auto"
+                         MinHeight="30"
                          Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
                          KeyDown="InputBox_KeyDown">
                     <TextBox.InputBindings>
@@ -81,6 +87,8 @@
 
                 <Button Grid.Column="1"
                         Content="Send"
+                        VerticalAlignment="Top"
+                        Height="30"
                         Command="{Binding SendCommand}"
                         Style="{StaticResource SendButtonStyle}"
                         Margin="5,0,0,0"/>

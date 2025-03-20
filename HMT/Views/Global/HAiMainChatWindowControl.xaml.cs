@@ -11,25 +11,28 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using HMT.Kernel;
-using System.Linq;
+using MdXaml;
+using Newtonsoft.Json;
+using RestSharp;
+using suiren.Utilities;
+using suiren.Services;
+using suiren.Models;
 using System.IO;
-using System.Collections.Specialized;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HMT.Views.Global
 {
-    /// <summary>
-    /// The model view for HAi main chat window control.
-    /// Willie Yao - 03/14/2025
-    /// </summary>
     public class HMTChatViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<HMTChatMessage> _messages = new ObservableCollection<HMTChatMessage>();
         private string _inputText;
-
         public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand SendCommand => new RelayCommand(SendMessage);
+
+        public ICommand SendCommand => new RelayCommand(SendMessageAsync);
         public ICommand ClearCommand => new RelayCommand(ClearMessages);
 
         public ObservableCollection<HMTChatMessage> Messages
@@ -44,24 +47,135 @@ namespace HMT.Views.Global
             set => SetField(ref _inputText, value);
         }
 
-        private async void SendMessage()
+        public StyleInfo _selectedStyleInfo;
+        public StyleInfo SelectedStyleInfo
         {
-            if (string.IsNullOrWhiteSpace(InputText)) return;
+            get => _selectedStyleInfo;
+            set
+            {
+                if (_selectedStyleInfo == value) return;
+                _selectedStyleInfo = value;
+            }
+        }
 
-            var newMessage = new HMTChatMessage(InputText, true);
-            Messages.Add(newMessage);
+        public HMTChatViewModel()
+        {
+            SelectedStyleInfo = new StyleInfo("SasabuneCompact", MarkdownStyle.SasabuneStandard);
+        }
+
+        private async Task ProcessStreamResponseAsync(HttpResponseMessage response, HMTChatMessage assistantMessage)
+        {
+            using (var stream = await response.Content.ReadAsStreamAsync())
+            using (var reader = new StreamReader(stream))
+            {
+                StringBuilder buffer = new StringBuilder();
+                char[] readBuffer = new char[4096];
+
+                while (true)
+                {
+                    int bytesRead = await reader.ReadAsync(readBuffer, 0, readBuffer.Length);
+                    if (bytesRead == 0) break;
+
+                    string chunk = new string(readBuffer, 0, bytesRead);
+                    buffer.Append(chunk);
+
+                    while (true)
+                    {
+                        int dataStart = buffer.ToString().IndexOf("data: ");
+                        if (dataStart == -1) break;
+
+                        int dataEnd = buffer.ToString().IndexOf("\n\n", dataStart, StringComparison.Ordinal);
+                        if (dataEnd == -1) break;
+
+                        string dataLine = buffer.ToString().Substring(dataStart, dataEnd - dataStart);
+                        buffer.Remove(0, dataEnd + 2);
+
+                        ProcessSingleDataLine(dataLine, assistantMessage);
+                    }
+                }
+            }            
+        }
+
+        private void ProcessSingleDataLine(string dataLine, HMTChatMessage assistantMessage)
+        {
+            if (!dataLine.StartsWith("data: ")) return;
+
+            var json = dataLine.Substring("data: ".Length);
+            if (json == "[DONE]") return;
 
             try
             {
-                // var response = await ChatService.GetResponseAsync(InputText);
-                Messages.Add(new HMTChatMessage("response", false));
+                var chunk = JsonConvert.DeserializeObject<DskApiResponseChunk>(json);
+                var content = chunk?.Choices?.FirstOrDefault()?.Delta?.Content;
+
+                if (!string.IsNullOrEmpty(content))
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        assistantMessage.AppendContent(content);
+                    });
+                }
+            }
+            catch (JsonException) { }
+        }
+
+        private List<dynamic> BuildMessageHistory()
+        {
+            var messages = new List<dynamic>
+            {
+                new { content = "You are a helpful assistant", role = "system" }
+            };
+
+            foreach (var msg in Messages)
+            {
+                messages.Add(new
+                {
+                    content = msg.Content,
+                    role = msg.IsUser ? "user" : "assistant"
+                });
+            }
+
+            return messages;
+        }
+
+        private async void SendMessageAsync()
+        {
+            if (string.IsNullOrWhiteSpace(InputText)) return;
+
+            var userMessage = new HMTChatMessage(InputText, true);
+            Messages.Add(userMessage);
+
+            var assistantMessage = new HMTChatMessage("", false);
+            Messages.Add(assistantMessage);
+
+            try
+            {
+                var requestBody = new
+                {
+                    messages = BuildMessageHistory(),
+                    model = "deepseek-chat",
+                    stream = true,
+                    temperature = 1,
+                    max_tokens = 2048
+                };
+
+                var json = JsonConvert.SerializeObject(requestBody);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "sk-613975d20507407399cb67b54a313504");
+
+                var response = await httpClient.PostAsync("https://api.deepseek.com/chat/completions", content);
+                await ProcessStreamResponseAsync(response, assistantMessage);
             }
             catch (Exception ex)
             {
-                Messages.Add(new HMTChatMessage($"Error: {ex.Message}", false));
+                // Handle exception
             }
-
-            InputText = string.Empty;
+            finally
+            {
+                InputText = string.Empty;
+            }
         }
 
         private void ClearMessages()
@@ -83,204 +197,95 @@ namespace HMT.Views.Global
         }
     }
 
+    public class DskApiResponseChunk
+    {
+        [JsonProperty("choices")]
+        public List<DskApiStreamChoice> Choices { get; set; }
+    }
+
+    public class DskApiStreamChoice
+    {
+        [JsonProperty("delta")]
+        public DskApiStreamDelta Delta { get; set; }
+    }
+
+    public class DskApiStreamDelta
+    {
+        [JsonProperty("content")]
+        public string Content { get; set; }
+    }
+
+    public class StyleInfo
+    {
+        public string Name { get; set; }
+        public Style Style { get; set; }
+
+        public StyleInfo(string name, Style style)
+        {
+            Name = name;
+            Style = style;
+        }
+
+        public override int GetHashCode() => Name.GetHashCode();
+
+        public override bool Equals(object val) => val is StyleInfo sf && Name == sf.Name;
+
+        public static bool operator ==(StyleInfo left, StyleInfo right) => Equals(left, right);
+        public static bool operator !=(StyleInfo left, StyleInfo right) => !Equals(left, right);
+    }
+
     public class HMTAlignmentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value ? HorizontalAlignment.Right : HorizontalAlignment.Left;
-        }
+            => (bool)value ? HorizontalAlignment.Right : HorizontalAlignment.Left;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
     }
 
     public class HMTBackgroundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value ?
-                new SolidColorBrush(Color.FromRgb(0, 120, 215)) :
-                new SolidColorBrush(Colors.White);
-        }
+            => (bool)value ? new SolidColorBrush(Color.FromRgb(0, 120, 215)) : new SolidColorBrush(Colors.White);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
     }
 
     public class HMTForegroundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            => (bool)value ? Brushes.White : Brushes.Black;
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+
+    public class HMTPercentageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool isUser = (bool)value;
-            return isUser
-                ? Brushes.White
-                : Brushes.Black;
+            if (value is double width && parameter is string percentageStr &&
+                double.TryParse(percentageStr, NumberStyles.Any, culture, out double percentage))
+            {
+                return width * percentage;
+            }
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// Interaction logic for HAiMainChatWindowControl.
-    /// </summary>
     public partial class HAiMainChatWindowControl : UserControl
     {
-        private List<dynamic> messages;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HAiMainChatWindowControl"/> class.
-        /// </summary>
         public HAiMainChatWindowControl()
         {
+            var _ = new MdXaml.MarkdownScrollViewer();
             this.InitializeComponent();
-            //messages = new List<dynamic>();
-            //messages.Add(new
-            //{
-            //    content = "You are a helpful assistant",
-            //    role = "system"
-            //});
             DataContext = new HMTChatViewModel();
-
         }
 
-        private void InputBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-
-        }
-
-        //private void AddMessageToPanel(string message, string sender)
-        //{
-        //    StackPanel messagePanel = new StackPanel { Orientation = Orientation.Horizontal };
-        //    TextBlock messageBlock = new TextBlock
-        //    {
-        //        Text = message,
-        //        Margin = new Thickness(5),
-        //        TextWrapping = TextWrapping.Wrap
-        //    };
-
-        //    messagePanel.Children.Add(messageBlock);
-        //    chatPanel.Children.Add(messagePanel);
-        //    scrollViewer.ScrollToEnd();
-        //}
-
-        ///// <summary>
-        ///// Handles click on the button by displaying a message box.
-        ///// </summary>
-        ///// <param name="sender">The event sender.</param>
-        ///// <param name="e">The event args.</param>        
-        //private async void button1_Click(object sender, RoutedEventArgs e)  
-        //{           
-        //    string responseString = string.Empty;
-        //    string input = inputBox.Text;
-        //    RestClient restClient = ClientFactory.CreateDskHttpClient();
-        //    OpenaiApiService openaiApiService = new OpenaiApiService(restClient);
-
-        //    AddMessageToPanel(input, "User");
-        //    clearInputInfo();
-
-        //    messages.Add(new
-        //    {
-        //        content = input,
-        //        role = "user"
-        //    });
-
-        //    var request = new
-        //    {
-        //        messages,
-        //        model = "deepseek-chat",
-        //        frequency_penalty = 0,
-        //        max_tokens = 2048,
-        //        presence_penalty = 0,
-        //        response_format = new
-        //        {
-        //            type = "text"
-        //        },
-        //        stop = (string)null,
-        //        stream = false,
-        //        stream_options = (string)null,
-        //        temperature = 1,
-        //        top_p = 1,
-        //        tools = (string)null,
-        //        tool_choice = "none",
-        //        logprobs = false,
-        //        top_logprobs = (string)null
-        //    };
-
-        //    var body = JsonConvert.SerializeObject(request);
-
-        //    var response = await openaiApiService.GetDskDataAsync(body).ConfigureAwait(false);            
-
-        //    if (response.IsSuccessful)
-        //    {
-        //        DskApiResponse dskApiResponse = JsonConvert.DeserializeObject<DskApiResponse>(response.Content);
-        //        dskApiResponse.Choices.ForEach(choice =>
-        //        {
-        //            if (choice.Message.Role == "assistant")
-        //            {
-        //                responseString = choice.Message.Content;
-        //            }
-        //        });
-        //    }
-        //    else
-        //    {
-        //        responseString = "**TIME OUT**";
-        //    }
-
-        //    AddMessageToChat(responseString, false);
-        //}
-
-        //private void clearInputInfo()
-        //{
-        //    Dispatcher.Invoke(() =>
-        //    {
-        //        sendBtn.IsEnabled = false;
-        //        inputBox.Text = string.Empty;
-        //    });
-        //}
-
-        //private void AddMessageToChat(string message, bool isUser)
-        //{           
-        //    Dispatcher.Invoke((Action)(() =>
-        //    {
-        //        RichTextBox resultRichTextBox = new RichTextBox();
-        //        Markdown engine = new Markdown();
-        //        if (string.IsNullOrEmpty(message))
-        //        {
-        //            StackPanel messagePanel = new StackPanel { Orientation = Orientation.Horizontal };
-        //            TextBlock messageBlock = new TextBlock
-        //            {
-        //                Text = "No result",
-        //                Margin = new Thickness(5),
-        //                TextWrapping = TextWrapping.Wrap
-        //            };
-
-        //            messagePanel.Children.Add(messageBlock);
-        //            chatPanel.Children.Add(messagePanel);
-        //        }
-        //        else
-        //        {
-        //            //MarkdownScrollViewer markdownScrollViewer = new MarkdownScrollViewer()
-        //            //{
-        //            //    Engine = engine
-        //            //};
-        //            FlowDocument document = engine.Transform(message);
-        //            //resultRichTextBox.Document = document;
-        //            FlowDocumentReader flowDocumentReader = new FlowDocumentReader();
-        //            flowDocumentReader.Document = document;
-        //            chatPanel.Children.Add(flowDocumentReader);
-        //        }
-
-        //        sendBtn.IsEnabled = true;
-
-
-        //    }));
-        //}
+        private void InputBox_KeyDown(object sender, KeyEventArgs e) { }
     }
 }
