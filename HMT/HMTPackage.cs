@@ -44,6 +44,7 @@ namespace HMT
     [ProvideProfile(typeof(GeneralOptionPage), "HMT D365FFO tools", "General", 0, 0, true)]
     [ProvideToolWindow(typeof(HMTJsonToDataContractWindow))]
     [ProvideToolWindow(typeof(HAiMainChatWindow))]
+    [ProvideToolWindow(typeof(HMTDllManagerWindowPackage))]
     public sealed class HMTPackage : AsyncPackage
     {
         /// <summary>
@@ -89,6 +90,7 @@ namespace HMT
             // end Ina Wang on 03/05/2025
             await Commands.WindowCommands.HMTJsonToDataContractWindowCommand.InitializeAsync(this);
             await Commands.WindowCommands.HAiMainChatWindowCommand.InitializeAsync(this);
+            await Commands.WindowCommands.HMTDllManagerWindowPackageCommand.InitializeAsync(this);
         }
 
         /// <summary>

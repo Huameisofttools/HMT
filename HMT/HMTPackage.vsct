@@ -227,6 +227,13 @@
           <ButtonText>Huamei Copilot Chat</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidHMTPackageCmdSet" id="cmdidHMTDllManagerWindowPackageCommand" priority="0x0145" type="Button">
+        <Parent guid="guidHMTPackageGroupSet" id="HMTSecGroup" />
+        <Icon guid="guidImages" id="HMLOGO" />
+        <Strings>
+          <ButtonText>Dll Manager Window</ButtonText>
+        </Strings>
+      </Button>
     </Buttons> 
 	  
     <Bitmaps>
@@ -263,6 +270,7 @@
 	  <IDSymbol name="HMTPasteLabelInDocCommand" value="0x0137" />
       <IDSymbol name="cmdidHMTJsonToDataContractWindowCommand" value="0x0139" />
 	  <IDSymbol name="HAiMainChatWindowCommand" value="0x0141" />
+      <IDSymbol name="cmdidHMTDllManagerWindowPackageCommand" value="0x0145"  />
     </GuidSymbol>
 
 	<GuidSymbol name="guidHMTPackageMenuSet" value="{1041a140-1cb6-44a5-9704-25bd0f8508ca}">
