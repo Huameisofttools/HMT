@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Forms;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Tables;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Views;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.BaseTypes;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Menus;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Security;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Workflows;
 using Microsoft.Dynamics.AX.Metadata.MetaModel;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Core;
-using System.Text.RegularExpressions;
 using EnvDTE;
 using Microsoft.Dynamics.AX.Metadata.Core.MetaModel;
-using Microsoft.Dynamics.AX.Metadata.Providers;
-using Microsoft.Dynamics.AX.Metadata.Storage;
 using Microsoft.Dynamics.AX.Metadata.Service;
 using Microsoft.Dynamics.AX.Metadata.Core.Collections;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.DataEntityViews;
-using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Presentation;
-using Microsoft.Dynamics.AX.Metadata.Collections;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Classes;
 using Microsoft.Dynamics.Framework.Tools.MetaModel.Automation.Maps;
 using HMT.Kernel;
@@ -69,22 +59,25 @@ namespace HMT.Services.Global
         /// </summary>
         abstract public void runAX();
 
+        /// <summary>
+        /// Willie Yao - 03/31/2025
+        /// Remove the blank line
+        /// </summary>
+        /// <param name="source">Source code</param>
+        /// <returns>
+        /// The source code after processing.
+        /// </returns>
         public string removeBlankLine(string source)
         {
-            string sourceCode = source.TrimStart();
-
-            while (sourceCode.StartsWith("\r") || sourceCode.StartsWith("\n"))
+            int index = 0;
+            
+            while (index < source.Length && (source[index] == '\r' || source[index] == '\n'))
             {
-                sourceCode = sourceCode.Substring(1);
-                sourceCode = sourceCode.TrimStart();
+                index++;
             }
-
-            if (sourceCode == string.Empty)
-            {
-                return source;
-            }
-
-            return sourceCode;
+            string result = source.Substring(index);
+            
+            return string.IsNullOrEmpty(result) ? source : result;
         }
 
         /// <summary>
